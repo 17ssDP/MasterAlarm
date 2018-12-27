@@ -1,8 +1,11 @@
 package com.example.masteralarm.fragments;
 
+import android.app.AlarmManager;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +26,12 @@ import java.util.TimeZone;
 import androidx.viewpager.widget.ViewPager;
 import jahirfiquitiva.libs.fabsmenu.FABsMenu;
 import jahirfiquitiva.libs.fabsmenu.TitleFAB;
+import com.example.masteralarm.data.AlarmData;
+
+import org.litepal.LitePal;
+
+import java.util.Calendar;
+import java.util.List;
 
 public class HomeFragment extends BaseFragment {
 
