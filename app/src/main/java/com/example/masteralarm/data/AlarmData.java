@@ -1,8 +1,10 @@
 package com.example.masteralarm.data;
 
+import org.litepal.crud.LitePalSupport;
+
 import java.util.Calendar;
 
-public class AlarmData {
+public class AlarmData extends LitePalSupport {
     private int id;
     private boolean isEnable;   // 闹钟是否处于开启状态
     private boolean isVibrate;  //是否震动
@@ -10,6 +12,14 @@ public class AlarmData {
     private String label;       //闹钟标签
     private Calendar time;      //闹钟时间
     private ToneData tone;          //铃声
+
+    public AlarmData() {
+
+    }
+
+    public AlarmData(int id) {
+        this.id = id;
+    }
     public int getId() {
         return id;
     }

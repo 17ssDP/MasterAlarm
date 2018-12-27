@@ -1,13 +1,22 @@
 package com.example.masteralarm.fragments;
 
+import android.app.AlarmManager;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.masteralarm.R;
+import com.example.masteralarm.data.AlarmData;
+
+import org.litepal.LitePal;
+
+import java.util.Calendar;
+import java.util.List;
 
 public class HomeFragment extends BaseFragment {
     // TODO: Rename parameter arguments, choose names that match
@@ -18,6 +27,7 @@ public class HomeFragment extends BaseFragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    View view;
 
     private OnFragmentInteractionListener mListener;
 
@@ -56,7 +66,25 @@ public class HomeFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View v = inflater.inflate(R.layout.fragment_home, container, false);
+        view = (View)v.findViewById(R.id.alarmFab);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SQLiteDatabase database = LitePal.getDatabase();
+                AlarmData alarmData = new AlarmData(1);
+                alarmData.setEnable(true);
+                alarmData.setLabel("Test Database");
+                alarmData.setRepeat(new boolean[]{true, true, true, true, true, true, true});
+                alarmData.setVibrate(true);
+                alarmData.save();
+                //读取数据库
+                List<AlarmData> alarms = LitePal.findAll(AlarmData.class);
+                Log.d("Read From Database: ", alarms.get(0).getLabel());
+                Log.d("test", "Test click");
+            }
+        });
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
