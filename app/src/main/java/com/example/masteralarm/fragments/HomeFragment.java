@@ -6,39 +6,46 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TableLayout;
 
 import com.example.masteralarm.R;
+import com.example.masteralarm.adapters.SimplePagerAdapter;
+import com.example.masteralarm.utils.ImageUtils;
+import com.example.masteralarm.views.PageIndicatorView;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.tabs.TabLayout;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.TimeZone;
+
+import androidx.viewpager.widget.ViewPager;
+import jahirfiquitiva.libs.fabsmenu.FABsMenu;
+import jahirfiquitiva.libs.fabsmenu.TitleFAB;
 
 public class HomeFragment extends BaseFragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private FABsMenu menu;
+    private TitleFAB stopwatchFab;
+    private TitleFAB timerFab;
+    private TitleFAB alarmFab;
+    private ImageView background;
+    private ViewPager viewPager;
+    private ViewPager timePager;
 
-    private OnFragmentInteractionListener mListener;
+    private SimplePagerAdapter pagerAdapter;
+    private SimplePagerAdapter timeAdapter;
+    private TabLayout tabLayout;
+    private PageIndicatorView timeIndicator;
 
     public HomeFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static HomeFragment newInstance(String param1, String param2) {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -46,47 +53,66 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        menu = view.findViewById(R.id.fabsMenu);
+        stopwatchFab = view.findViewById(R.id.stopwatchFab);
+        timerFab = view.findViewById(R.id.timerFab);
+        alarmFab = view.findViewById(R.id.alarmFab);
+
+//        timeIndicator = view.findViewById(R.id.pageIndicator);
+        timePager = view.findViewById(R.id.timePager);
+
+        viewPager = view.findViewById(R.id.viewPager);
+        tabLayout = view.findViewById(R.id.tabLayout);
+
+        setPageFragments();
+//        setClockFragments();
+        ImageUtils.setBackgroundImage(background);
+        return view;
+    }
+
+    private void setPageFragments() {
+        pagerAdapter = new SimplePagerAdapter(getChildFragmentManager(), new RecyclerFragment(), new SettingFragment());
+        viewPager.setAdapter(pagerAdapter);
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
+    }
+
+    private void setClockFragments() {
+        if (timePager != null && timeIndicator != null) {
+            List<ClockFragment> fragments = new ArrayList<>();
+
+            ClockFragment fragment = new ClockFragment();
+            fragments.add(fragment);
+
+            timeAdapter = new SimplePagerAdapter(getChildFragmentManager(), fragments.toArray(new ClockFragment[0]));
+            timePager.setAdapter(timeAdapter);
+            timeIndicator.setViewPager(timePager);
+            timeIndicator.setVisibility(fragments.size() > 1 ? View.VISIBLE : View.GONE);
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+    private void setListeners(){
+
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
