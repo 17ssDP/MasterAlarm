@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TableLayout;
+import android.widget.Toast;
 
 import com.example.masteralarm.R;
 import com.example.masteralarm.adapters.SimplePagerAdapter;
@@ -79,6 +80,7 @@ public class HomeFragment extends BaseFragment {
         viewPager = view.findViewById(R.id.viewPager);
         tabLayout = view.findViewById(R.id.tabLayout);
 
+        setListeners();
         setPageFragments();
 //        setClockFragments();
         ImageUtils.setBackgroundImage(background);
@@ -119,6 +121,22 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void setListeners(){
+        alarmFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SQLiteDatabase database = LitePal.getDatabase();
+                AlarmData alarmData = new AlarmData(1);
+                alarmData.setEnable(true);
+                alarmData.setLabel("Test Database");
+                alarmData.setRepeat(new boolean[]{true, true, true, true, true, true, true});
+                alarmData.setVibrate(true);
+                alarmData.save();
+                //读取数据库
+                List<AlarmData> alarms = LitePal.findAll(AlarmData.class);
+                Log.d("Read From Database: ", alarms.get(0).getLabel());
+                Log.d("test", "Test click");
+            }
+        });
 
     }
 
