@@ -125,7 +125,7 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 SQLiteDatabase database = LitePal.getDatabase();
-                AlarmData alarmData = new AlarmData(1);
+                AlarmData alarmData = new AlarmData(99);
                 alarmData.setEnable(true);
                 alarmData.setLabel("Test Database");
                 alarmData.setRepeat(new boolean[]{true, true, true, true, true, true, true});
@@ -133,8 +133,10 @@ public class HomeFragment extends BaseFragment {
                 alarmData.save();
                 //读取数据库
                 List<AlarmData> alarms = LitePal.findAll(AlarmData.class);
-                Log.d("Read From Database: ", alarms.get(0).getLabel());
-                Log.d("test", "Test click");
+                Log.i("Database size: ", " " + alarms.size());
+                Log.i("Test Search: ", LitePal.find(AlarmData.class, 99).getLabel());
+//                for(int i = 0; i < alarms.size(); i++)
+//                    Log.i("Read From Database: ", LitePal.find(AlarmData.class, ).getId() + "");
             }
         });
 
