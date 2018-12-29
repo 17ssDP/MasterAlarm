@@ -29,7 +29,7 @@ public class DigitalClockView extends View implements ViewTreeObserver.OnGlobalL
 
     private TimeZone timezone;
 
-    private Disposable textColorPrimarySubscription;
+//    private Disposable textColorPrimarySubscription;
 
     public DigitalClockView(Context context) {
         this(context, null, 0);
@@ -60,20 +60,20 @@ public class DigitalClockView extends View implements ViewTreeObserver.OnGlobalL
 
     @Override
     public void subscribe() {
-        textColorPrimarySubscription = Aesthetic.Companion.get()
-                .textColorPrimary()
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        paint.setColor(integer);
-                        invalidate();
-                    }
-                });
+//        textColorPrimarySubscription = Aesthetic.Companion.get()
+//                .textColorPrimary()
+//                .subscribe(new Consumer<Integer>() {
+//                    @Override
+//                    public void accept(Integer integer) throws Exception {
+//                        paint.setColor(integer);
+//                        invalidate();
+//                    }
+//                });
     }
 
     @Override
     public void unsubscribe() {
-        textColorPrimarySubscription.dispose();
+//        textColorPrimarySubscription.dispose();
     }
 
     @Override

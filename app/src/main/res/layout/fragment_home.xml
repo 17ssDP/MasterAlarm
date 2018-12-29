@@ -7,7 +7,8 @@
     <FrameLayout
         android:id="@+id/timeContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:minHeight="250dp">
 
         <ImageView
             android:id="@+id/background"
@@ -26,12 +27,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <!--<com.example.masteralarm.views.PageIndicatorView-->
-            <!--android:id="@+id/pageIndicator"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="bottom|center_horizontal"-->
-            <!--android:layout_margin="16dp"/>-->
+        <com.example.masteralarm.views.PageIndicatorView
+            android:id="@+id/pageIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_margin="16dp"/>
 
     </FrameLayout>
 
@@ -77,25 +78,25 @@
             app:fab_moreButtonRippleColor="?colorPrimary"
             app:fab_moreButtonSize="normal">
 
-            <jahirfiquitiva.libs.fabsmenu.TitleFAB
-                android:id="@+id/stopwatchFab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:backgroundTint="?colorAccent"
-                app:fabSize="mini"
-                app:rippleColor="?colorPrimary"
-                app:srcCompat="@drawable/ic_stopwatch"
-                app:fab_title="@string/title_set_stopwatch" />
+            <!--<jahirfiquitiva.libs.fabsmenu.TitleFAB-->
+                <!--android:id="@+id/stopwatchFab"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--app:backgroundTint="?colorAccent"-->
+                <!--app:fabSize="mini"-->
+                <!--app:rippleColor="?colorPrimary"-->
+                <!--app:srcCompat="@drawable/ic_stopwatch"-->
+                <!--app:fab_title="@string/title_set_stopwatch" />-->
 
-            <jahirfiquitiva.libs.fabsmenu.TitleFAB
-                android:id="@+id/timerFab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:backgroundTint="?colorAccent"
-                app:fabSize="mini"
-                app:rippleColor="?colorPrimary"
-                app:srcCompat="@drawable/ic_timer"
-                app:fab_title="@string/title_set_timer" />
+            <!--<jahirfiquitiva.libs.fabsmenu.TitleFAB-->
+                <!--android:id="@+id/timerFab"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--app:backgroundTint="?colorAccent"-->
+                <!--app:fabSize="mini"-->
+                <!--app:rippleColor="?colorPrimary"-->
+                <!--app:srcCompat="@drawable/ic_timer"-->
+                <!--app:fab_title="@string/title_set_timer" />-->
 
             <jahirfiquitiva.libs.fabsmenu.TitleFAB
                 android:id="@+id/alarmFab"

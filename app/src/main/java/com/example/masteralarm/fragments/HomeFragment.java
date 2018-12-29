@@ -1,7 +1,5 @@
 package com.example.masteralarm.fragments;
 
-import android.app.AlarmManager;
-import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,19 +8,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TableLayout;
-import android.widget.Toast;
 
 import com.example.masteralarm.R;
 import com.example.masteralarm.adapters.SimplePagerAdapter;
 import com.example.masteralarm.utils.ImageUtils;
 import com.example.masteralarm.views.PageIndicatorView;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
-import java.util.TimeZone;
 
 import androidx.viewpager.widget.ViewPager;
 import jahirfiquitiva.libs.fabsmenu.FABsMenu;
@@ -30,9 +25,6 @@ import jahirfiquitiva.libs.fabsmenu.TitleFAB;
 import com.example.masteralarm.data.AlarmData;
 
 import org.litepal.LitePal;
-
-import java.util.Calendar;
-import java.util.List;
 
 public class HomeFragment extends BaseFragment {
 
@@ -70,11 +62,11 @@ public class HomeFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         menu = view.findViewById(R.id.fabsMenu);
-        stopwatchFab = view.findViewById(R.id.stopwatchFab);
-        timerFab = view.findViewById(R.id.timerFab);
+//        stopwatchFab = view.findViewById(R.id.stopwatchFab);
+//        timerFab = view.findViewById(R.id.timerFab);
         alarmFab = view.findViewById(R.id.alarmFab);
 
-//        timeIndicator = view.findViewById(R.id.pageIndicator);
+        timeIndicator = view.findViewById(R.id.pageIndicator);
         timePager = view.findViewById(R.id.timePager);
 
         viewPager = view.findViewById(R.id.viewPager);
@@ -82,7 +74,7 @@ public class HomeFragment extends BaseFragment {
 
         setListeners();
         setPageFragments();
-//        setClockFragments();
+        setClockFragments();
         ImageUtils.setBackgroundImage(background);
         return view;
     }
@@ -124,17 +116,19 @@ public class HomeFragment extends BaseFragment {
         alarmFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SQLiteDatabase database = LitePal.getDatabase();
+//                SQLiteDatabase database = LitePal.getDatabase();
                 AlarmData alarmData = new AlarmData(1);
                 alarmData.setEnable(true);
                 alarmData.setLabel("Test Database");
                 alarmData.setRepeat(new boolean[]{true, true, true, true, true, true, true});
                 alarmData.setVibrate(true);
-                alarmData.save();
-                //读取数据库
-                List<AlarmData> alarms = LitePal.findAll(AlarmData.class);
-                Log.d("Read From Database: ", alarms.get(0).getLabel());
-                Log.d("test", "Test click");
+                alarmData.setTime(Calendar.getInstance());
+//                alarmData.save();
+//                //读取数据库
+//                List<AlarmData> alarms = LitePal.findAll(AlarmData.class);
+//                Log.d("Read From Database: ", alarms.get(0).getLabel());
+//                Log.d("test", "Test click");
+                getMasterAlarm().addAlarm(alarmData);
             }
         });
 
