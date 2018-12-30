@@ -20,6 +20,11 @@ public class AlarmData extends LitePalSupport {
     private String label;       //闹钟标签
     private Calendar time;      //闹钟时间
     private ToneData tone;          //铃声
+    private boolean hasSound;       //是否有声音
+
+    public AlarmData(int id) {
+
+    }
 
     public AlarmData(int id, Calendar time) {
         this.id = id;
@@ -52,43 +57,64 @@ public class AlarmData extends LitePalSupport {
     public int getId() {
         return id;
     }
+
     public void setId(int id) {
         this.id = id;
     }
+
     public boolean isEnable() {
         return isEnable;
     }
+
     public void setEnable(boolean enable) {
         isEnable = enable;
     }
+
     public boolean isVibrate() {
         return isVibrate;
     }
+
     public void setVibrate(boolean vibrate) {
         isVibrate = vibrate;
     }
+
     public boolean[] getRepeat() {
         return repeat;
     }
+
     public void setRepeat(boolean[] repeat) {
         this.repeat = repeat;
     }
+
     public String getLabel() {
         return label;
     }
+
     public void setLabel(String label) {
         this.label = label;
     }
+
     public Calendar getTime() {
         return time;
     }
+
     public void setTime(Calendar time) {
         this.time = time;
     }
+
     public ToneData getTone() {
         return tone;
     }
+
     public void setTone(ToneData tone) {
         this.tone = tone;
+    }
+
+    public boolean isHasSound() {
+        return hasSound;
+    }
+
+    public void setHasSound(boolean hasSound) {
+        this.hasSound = hasSound;
     }
 }

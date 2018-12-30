@@ -4,6 +4,7 @@ import android.app.Application;
 import android.util.Log;
 
 import com.example.masteralarm.data.AlarmData;
+import com.example.masteralarm.interfaces.AlarmListener;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
@@ -17,6 +18,8 @@ import java.util.List;
 
 public class MasterAlarm extends LitePalApplication {
     private List<AlarmData> alarms;
+    List<AlarmData> alarmData;
+    List<AlarmListener> listeners;
     private SimpleExoPlayer player;
     @Override
     public void onCreate() {
@@ -41,5 +44,30 @@ public class MasterAlarm extends LitePalApplication {
         alarm.save();
         alarms.add(alarm);
         return alarm;
+    }
+
+    private void initializeData () {
+
+    }
+    public List<AlarmData> getAlarmData () {
+        return alarmData;
+    }
+
+    public void onAlarmChange () {
+        for (AlarmListener listener : listeners) {
+            listener.onAlarmChanged();
+        }
+    }
+    public void addListener (AlarmListener listener){
+        listeners.add(listener);
+    }
+    public void addAlarm (AlarmData data){
+        alarmData.add(data);
+        onAlarmChange();
+    }
+
+    public void deleteAlarm (AlarmData data){
+        alarmData.remove(data);
+        onAlarmChange();
     }
 }

@@ -66,37 +66,37 @@
                 android:paddingLeft="12dp"
                 android:paddingRight="12dp">
 
-                <View
+                <com.example.masteralarm.views.DaySwitch
                     android:layout_width="0dp"
                     android:layout_height="42dp"
                     android:layout_weight="1" />
 
-                <View
+                <com.example.masteralarm.views.DaySwitch
                     android:layout_width="0dp"
                     android:layout_height="42dp"
                     android:layout_weight="1" />
 
-                <View
+                <com.example.masteralarm.views.DaySwitch
                     android:layout_width="0dp"
                     android:layout_height="42dp"
                     android:layout_weight="1" />
 
-                <View
+                <com.example.masteralarm.views.DaySwitch
                     android:layout_width="0dp"
                     android:layout_height="42dp"
                     android:layout_weight="1" />
 
-                <View
+                <com.example.masteralarm.views.DaySwitch
                     android:layout_width="0dp"
                     android:layout_height="42dp"
                     android:layout_weight="1" />
 
-                <View
+                <com.example.masteralarm.views.DaySwitch
                     android:layout_width="0dp"
                     android:layout_height="42dp"
                     android:layout_weight="1" />
 
-                <View
+                <com.example.masteralarm.views.DaySwitch
                     android:layout_width="0dp"
                     android:layout_height="42dp"
                     android:layout_weight="1" />
