@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.format.DateFormat;
 
 import com.example.masteralarm.R;
+import com.example.masteralarm.data.PreferenceData;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,12 +19,13 @@ public class FormatUtils {
     public static final String FORMAT_24H_SHORT = "HH:mm";
     public static final String FORMAT_DATE = "MMMM d yyyy";
 
+
     public static String getFormat(Context context) {
-        return DateFormat.is24HourFormat(context) ? FORMAT_24H : FORMAT_12H;
+        return PreferenceData.is24HourFormat ? FORMAT_24H : FORMAT_12H;
     }
 
     public static String getShortFormat(Context context) {
-        return DateFormat.is24HourFormat(context) ? FORMAT_24H_SHORT : FORMAT_12H_SHORT;
+        return PreferenceData.is24HourFormat ? FORMAT_24H_SHORT : FORMAT_12H_SHORT;
     }
 
     public static String format(Context context, Date time) {
@@ -35,7 +37,8 @@ public class FormatUtils {
     }
 
     public static String format(Date time, String format) {
-        return new SimpleDateFormat(format, Locale.getDefault()).format(time);
+        SimpleDateFormat dateFormat = new SimpleDateFormat(format,PreferenceData.locale);
+        return dateFormat.format(time);
     }
 
     public static String formatMillis(long millis) {

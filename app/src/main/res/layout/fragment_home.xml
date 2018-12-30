@@ -1,20 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <FrameLayout
         android:id="@+id/timeContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:minHeight="250dp">
+        android:layout_height="match_parent">
 
         <ImageView
+            android:contentDescription="@string/app_name"
             android:id="@+id/background"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/app_clock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|center_horizontal"
+            android:layout_margin="45dp"
+            android:textAlignment="center"
+            android:textSize="50sp"
+            android:textStyle="bold" />
 
         <View
             android:id="@+id/overlay"
@@ -22,17 +33,17 @@
             android:layout_height="match_parent"
             android:alpha="0.5" />
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/timePager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+        <!--<androidx.viewpager.widget.ViewPager-->
+            <!--android:id="@+id/timePager"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent" />-->
 
         <com.example.masteralarm.views.PageIndicatorView
             android:id="@+id/pageIndicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center_horizontal"
-            android:layout_margin="16dp"/>
+            android:layout_margin="16dp" />
 
     </FrameLayout>
 
@@ -42,8 +53,9 @@
         android:layout_height="match_parent"
         android:background="@color/colorPrimary"
         android:orientation="vertical"
+        app:layout_behavior="@string/bottom_sheet_behavior"
         >
-        <!--app:layout_behavior="james.alarmio.utils.ScrollableBottomSheetBehavior"-->
+
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
@@ -78,25 +90,25 @@
             app:fab_moreButtonRippleColor="?colorPrimary"
             app:fab_moreButtonSize="normal">
 
-            <!--<jahirfiquitiva.libs.fabsmenu.TitleFAB-->
-                <!--android:id="@+id/stopwatchFab"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--app:backgroundTint="?colorAccent"-->
-                <!--app:fabSize="mini"-->
-                <!--app:rippleColor="?colorPrimary"-->
-                <!--app:srcCompat="@drawable/ic_stopwatch"-->
-                <!--app:fab_title="@string/title_set_stopwatch" />-->
+            <jahirfiquitiva.libs.fabsmenu.TitleFAB
+                android:id="@+id/stopwatchFab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:backgroundTint="?colorAccent"
+                app:fabSize="mini"
+                app:rippleColor="?colorPrimary"
+                app:srcCompat="@drawable/ic_stopwatch"
+                app:fab_title="@string/title_set_stopwatch" />
 
-            <!--<jahirfiquitiva.libs.fabsmenu.TitleFAB-->
-                <!--android:id="@+id/timerFab"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--app:backgroundTint="?colorAccent"-->
-                <!--app:fabSize="mini"-->
-                <!--app:rippleColor="?colorPrimary"-->
-                <!--app:srcCompat="@drawable/ic_timer"-->
-                <!--app:fab_title="@string/title_set_timer" />-->
+            <jahirfiquitiva.libs.fabsmenu.TitleFAB
+                android:id="@+id/timerFab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:backgroundTint="?colorAccent"
+                app:fabSize="mini"
+                app:rippleColor="?colorPrimary"
+                app:srcCompat="@drawable/ic_timer"
+                app:fab_title="@string/title_alarm_dialog" />
 
             <jahirfiquitiva.libs.fabsmenu.TitleFAB
                 android:id="@+id/alarmFab"

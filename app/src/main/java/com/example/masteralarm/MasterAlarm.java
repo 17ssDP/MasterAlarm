@@ -4,12 +4,14 @@ import android.app.Application;
 import android.util.Log;
 
 import com.example.masteralarm.data.AlarmData;
+import com.example.masteralarm.data.PreferenceData;
 import com.example.masteralarm.interfaces.AlarmListener;
 
 import org.litepal.LitePalApplication;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 
 public class MasterAlarm extends LitePalApplication {
 
@@ -20,6 +22,9 @@ public class MasterAlarm extends LitePalApplication {
         super.onCreate();
         alarmData = new ArrayList<>();
         listeners = new ArrayList<>();
+
+        //设置时区
+        TimeZone.setDefault(PreferenceData.timeZone);
     }
 
     private void initializeData(){
@@ -46,7 +51,9 @@ public class MasterAlarm extends LitePalApplication {
     }
 
     public void deleteAlarm(AlarmData data){
-        alarmData.remove(data);
-        onAlarmChange();
+        if (alarmData.contains(data)){
+            alarmData.remove(data);
+            onAlarmChange();
+        }
     }
 }

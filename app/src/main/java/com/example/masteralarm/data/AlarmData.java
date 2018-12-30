@@ -1,10 +1,13 @@
 package com.example.masteralarm.data;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.litepal.crud.LitePalSupport;
 
 import java.util.Calendar;
 
-public class AlarmData extends LitePalSupport {
+public class AlarmData extends LitePalSupport implements Parcelable {
     private int id;
     private boolean isEnable;   // 闹钟是否处于开启状态
     private boolean isVibrate;  //是否震动
@@ -21,6 +24,27 @@ public class AlarmData extends LitePalSupport {
     public AlarmData(int id) {
         this.id = id;
     }
+
+    protected AlarmData(Parcel in) {
+        id = in.readInt();
+        isEnable = in.readByte() != 0;
+        isVibrate = in.readByte() != 0;
+        repeat = in.createBooleanArray();
+        label = in.readString();
+        hasSound = in.readByte() != 0;
+    }
+
+    public static final Creator<AlarmData> CREATOR = new Creator<AlarmData>() {
+        @Override
+        public AlarmData createFromParcel(Parcel in) {
+            return new AlarmData(in);
+        }
+
+        @Override
+        public AlarmData[] newArray(int size) {
+            return new AlarmData[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -93,5 +117,15 @@ public class AlarmData extends LitePalSupport {
 
     public void setHasSound(boolean hasSound) {
         this.hasSound = hasSound;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
     }
 }

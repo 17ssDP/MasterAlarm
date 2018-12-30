@@ -30,7 +30,6 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatCheckBox;
-import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -282,7 +281,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
             public void onClick(View view) {
                 AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
                 //delete button listener
-
+                application.deleteAlarm(alarm);
             }
         });
 

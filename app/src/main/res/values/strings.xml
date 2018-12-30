@@ -1,11 +1,14 @@
 <resources>
     <string name="app_name" translatable="false">AlarmMaster</string>
+    <string name="tab_alarm">Alarm</string>
+    <string name="tab_setting">Setting</string>
     <string name="title_alarm">Alarm %d</string>
     <string name="title_none">None</string>
     <string name="title_vibrate">Vibrate</string>
     <string name="title_repeat">Repeat</string>
     <string name="title_set_alarm">Alarm</string>
     <string name="title_set_timer">Timer</string>
+    <string name="title_alarm_dialog">Dialog</string>
     <string name="title_set_stopwatch">Stopwatch</string>
     <string name="title_lap">Lap</string>
     <string name="title_stopwatch">Stopwatch</string>
