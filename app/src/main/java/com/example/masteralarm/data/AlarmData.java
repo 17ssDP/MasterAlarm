@@ -1,8 +1,16 @@
 package com.example.masteralarm.data;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import com.example.masteralarm.adapters.AlarmAdapter;
+
 import org.litepal.crud.LitePalSupport;
 
 import java.util.Calendar;
+import java.util.concurrent.CancellationException;
+
+import static android.preference.PreferenceManager.getDefaultSharedPreferencesName;
 
 public class AlarmData extends LitePalSupport {
     private int id;
@@ -13,13 +21,34 @@ public class AlarmData extends LitePalSupport {
     private Calendar time;      //闹钟时间
     private ToneData tone;          //铃声
 
-    public AlarmData() {
-
-    }
-
-    public AlarmData(int id) {
+    public AlarmData(int id, Calendar time) {
         this.id = id;
+        this.time = time;
     }
+    public AlarmData(int id, boolean isEnable, boolean isVibrate, boolean[] repeat, String label, Calendar time, ToneData tone) {
+        this.id = id;
+        isEnable = isEnable;
+        isVibrate = isVibrate;
+        repeat = repeat;
+        label = label;
+        time = time;
+        tone = tone;
+    }
+    public AlarmData(int id, Context context) {
+        this.id = id;
+//        SharedPreferences sharedPreferences = context.getSharedPreferences(getDefaultSharedPreferencesName(context),
+//                getDefaultSharedPreferencesMode());
+    }
+
+    public boolean isRepeat() {
+        for (boolean day : repeat) {
+            if (day)
+                return true;
+        }
+
+        return false;
+    }
+
     public int getId() {
         return id;
     }
