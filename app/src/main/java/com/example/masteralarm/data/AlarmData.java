@@ -1,25 +1,26 @@
 package com.example.masteralarm.data;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 
-import com.example.masteralarm.adapters.AlarmAdapter;
+import android.content.Context;
+import android.net.Uri;
+import android.os.Parcel;
 
 import org.litepal.crud.LitePalSupport;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.concurrent.CancellationException;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferencesName;
 
-public class AlarmData extends LitePalSupport {
+public class AlarmData extends LitePalSupport implements Serializable {
     private int id;
     private boolean isEnable;   // 闹钟是否处于开启状态
     private boolean isVibrate;  //是否震动
     private boolean[] repeat;   //重复信息
     private String label;       //闹钟标签
     private Calendar time;      //闹钟时间
-    private ToneData tone;          //铃声
+    private transient Uri tone;          //铃声
     private boolean hasSound;       //是否有声音
 
     public AlarmData(int id) {
@@ -52,6 +53,15 @@ public class AlarmData extends LitePalSupport {
         }
 
         return false;
+    }
+
+    protected AlarmData(Parcel in) {
+        id = in.readInt();
+        isEnable = in.readByte() != 0;
+        isVibrate = in.readByte() != 0;
+        repeat = in.createBooleanArray();
+        label = in.readString();
+        hasSound = in.readByte() != 0;
     }
 
     public int getId() {
@@ -102,11 +112,11 @@ public class AlarmData extends LitePalSupport {
         this.time = time;
     }
 
-    public ToneData getTone() {
+    public Uri getTone() {
         return tone;
     }
 
-    public void setTone(ToneData tone) {
+    public void setTone(Uri tone) {
         this.tone = tone;
     }
 

@@ -31,6 +31,6 @@ public class SettingFragment extends BasePageFragment{
 
     @Override
     public String getTitle() {
-        return null;
+        return "Setting";
     }
 }

@@ -1,6 +1,7 @@
 package com.example.masteralarm;
 import android.util.Log;
 import com.example.masteralarm.data.AlarmData;
+import com.example.masteralarm.data.PreferenceData;
 import com.example.masteralarm.interfaces.AlarmListener;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
@@ -10,6 +11,7 @@ import org.litepal.LitePalApplication;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 public class MasterAlarm extends LitePalApplication {
     List<AlarmData> alarmData;
@@ -22,6 +24,8 @@ public class MasterAlarm extends LitePalApplication {
         alarmData = LitePal.findAll(AlarmData.class);
         listeners = new ArrayList<>();
         player = ExoPlayerFactory.newSimpleInstance(this, new DefaultTrackSelector());
+        //设置时区
+        TimeZone.setDefault(PreferenceData.timeZone);
     }
 
     public List<AlarmData> getAlarmData(){
@@ -60,8 +64,10 @@ public class MasterAlarm extends LitePalApplication {
         onAlarmChange();
     }
 
-    public void deleteAlarm (AlarmData data){
-        alarmData.remove(data);
-        onAlarmChange();
+    public void deleteAlarm(AlarmData data){
+        if (alarmData.contains(data)){
+            alarmData.remove(data);
+            onAlarmChange();
+        }
     }
 }

@@ -24,11 +24,11 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
 
     private IndicatorEngine engine;
 
-//    private int textColorPrimary;
-//    private int textColorSecondary;
+    private int textColorPrimary;
+    private int textColorSecondary;
 
-//    private Disposable textColorPrimarySubscription;
-//    private Disposable textColorSecondarySubscription;
+    private Disposable textColorPrimarySubscription;
+    private Disposable textColorSecondarySubscription;
 
     public PageIndicatorView(Context context) {
         this(context, null);
@@ -51,33 +51,33 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
 
     @Override
     public void subscribe() {
-//        textColorPrimarySubscription = Aesthetic.Companion.get()
-//                .textColorPrimary()
-//                .subscribe(new Consumer<Integer>() {
-//                    @Override
-//                    public void accept(Integer integer) throws Exception {
-//                        textColorPrimary = integer;
-//                        engine.updateTextColors(PageIndicatorView.this);
-//                        invalidate();
-//                    }
-//                });
-//
-//        textColorSecondarySubscription = Aesthetic.Companion.get()
-//                .textColorSecondary()
-//                .subscribe(new Consumer<Integer>() {
-//                    @Override
-//                    public void accept(Integer integer) throws Exception {
-//                        textColorSecondary = integer;
-//                        engine.updateTextColors(PageIndicatorView.this);
-//                        invalidate();
-//                    }
-//                });
+        textColorPrimarySubscription = Aesthetic.Companion.get()
+                .textColorPrimary()
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        textColorPrimary = integer;
+                        engine.updateTextColors(PageIndicatorView.this);
+                        invalidate();
+                    }
+                });
+
+        textColorSecondarySubscription = Aesthetic.Companion.get()
+                .textColorSecondary()
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        textColorSecondary = integer;
+                        engine.updateTextColors(PageIndicatorView.this);
+                        invalidate();
+                    }
+                });
     }
 
     @Override
     public void unsubscribe() {
-//        textColorPrimarySubscription.dispose();
-//        textColorSecondarySubscription.dispose();
+        textColorPrimarySubscription.dispose();
+        textColorSecondarySubscription.dispose();
     }
 
     public int getTotalPages() {
@@ -125,11 +125,6 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
     public void onPageScrollStateChanged(int state) {
     }
 
-    /**
-     * You must call this AFTER setting the Adapter for the ViewPager, or it won't display the right amount of points.
-     *
-     * @param viewPager
-     */
     public void setViewPager(ViewPager viewPager) {
         this.viewPager = viewPager;
         viewPager.addOnPageChangeListener(this);
@@ -161,16 +156,16 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
             selectedPaint = new Paint();
             unselectedPaint = new Paint();
 
-//            selectedPaint.setColor(indicator.textColorPrimary);
-//            unselectedPaint.setColor(indicator.textColorSecondary);
+            selectedPaint.setColor(indicator.textColorPrimary);
+            unselectedPaint.setColor(indicator.textColorSecondary);
             selectedPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
             unselectedPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
         }
 
-//        public void updateTextColors(PageIndicatorView indicator) {
-//            selectedPaint.setColor(indicator.textColorPrimary);
-//            unselectedPaint.setColor(indicator.textColorSecondary);
-//        }
+        public void updateTextColors(PageIndicatorView indicator) {
+            selectedPaint.setColor(indicator.textColorPrimary);
+            unselectedPaint.setColor(indicator.textColorSecondary);
+        }
 
         public void onDrawIndicator(Canvas canvas) {
             int height = indicator.getHeight();

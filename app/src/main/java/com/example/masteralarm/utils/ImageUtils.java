@@ -8,7 +8,7 @@ import com.example.masteralarm.R;
 public class ImageUtils {
     public static void setBackgroundImage(ImageView view){
         final String imageURL = "";
-        final int imageSrc = R.mipmap.ic_launcher;
+        final int imageSrc = R.mipmap.background;
         if (view != null){
             view.setImageResource(imageSrc);
         }

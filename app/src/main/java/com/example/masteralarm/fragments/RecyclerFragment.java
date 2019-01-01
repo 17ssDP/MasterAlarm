@@ -6,13 +6,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.aesthetic.Aesthetic;
 import com.example.masteralarm.R;
 import com.example.masteralarm.adapters.RecyclerAdapter;
 import com.example.masteralarm.interfaces.AlarmListener;
-
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import io.reactivex.disposables.Disposable;
@@ -23,6 +23,7 @@ public class RecyclerFragment extends BasePageFragment implements AlarmListener 
     private View empty;
     private RecyclerAdapter alarmsAdapter;
 
+    //颜色属性
     private Disposable colorAccentSubscription;
     private Disposable colorForegroundSubscription;
     private Disposable textColorPrimarySubscription;
@@ -53,7 +54,7 @@ public class RecyclerFragment extends BasePageFragment implements AlarmListener 
 
     @Override
     public String getTitle() {
-        return null;
+        return "Alarm";
     }
 
     private void initialSetting(){
