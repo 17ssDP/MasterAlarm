@@ -4,6 +4,7 @@
     package="com.example.masteralarm">
 
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".MasterAlarm"
@@ -36,6 +37,7 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
+        <service android:name=".services.AlarmService" />
     </application>
 
 </manifest>

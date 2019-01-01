@@ -85,8 +85,6 @@ public class AlarmManagerUtil {
         intent.setComponent(new ComponentName("com.example.masteralarm","com.example.masteralarm.receivers.AlarmBroadcastReceiver"));
         intent.putExtra("intervalMillis", intervalMillis);
         intent.putExtra("alarmdata",alarmData);
-//        intent.putExtra("id", id);
-//        intent.putExtra("soundOrVibrator", soundOrVibrator);
         PendingIntent sender = PendingIntent.getBroadcast(context, alarmData.getId(), intent, PendingIntent
                 .FLAG_CANCEL_CURRENT);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {

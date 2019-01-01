@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -187,6 +188,7 @@ public class HomeFragment extends BaseFragment {
                 alarmData.setRepeat(new boolean[]{false,false,false,false,false,false,false});
                 alarmData.setVibrate(false);
                 alarmData.setTime(choose);
+                alarmData.setTone(getSystemDefultRingtoneUri());
 
                 AlarmManagerUtil.setAlarm(getMasterAlarm(),alarmData);
                 Log.d("test","set complete");
@@ -233,5 +235,9 @@ public class HomeFragment extends BaseFragment {
                 }
             }
         }).start();
+    }
+
+    private Uri getSystemDefultRingtoneUri() {
+        return RingtoneManager.getActualDefaultRingtoneUri(getContext(), RingtoneManager.TYPE_RINGTONE);
     }
 }

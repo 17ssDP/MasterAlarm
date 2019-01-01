@@ -1,20 +1,22 @@
 package com.example.masteralarm.data;
 
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import org.litepal.crud.LitePalSupport;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
-public class AlarmData extends LitePalSupport implements Parcelable {
+public class AlarmData extends LitePalSupport implements Serializable {
     private int id;
     private boolean isEnable;   // 闹钟是否处于开启状态
     private boolean isVibrate;  //是否震动
     private boolean[] repeat;   //重复信息
     private String label;       //闹钟标签
     private Calendar time;      //闹钟时间
-    private ToneData tone;          //铃声
+    private transient Uri tone;          //铃声
     private boolean hasSound;       //是否有声音
 
     public AlarmData() {
@@ -33,18 +35,6 @@ public class AlarmData extends LitePalSupport implements Parcelable {
         label = in.readString();
         hasSound = in.readByte() != 0;
     }
-
-    public static final Creator<AlarmData> CREATOR = new Creator<AlarmData>() {
-        @Override
-        public AlarmData createFromParcel(Parcel in) {
-            return new AlarmData(in);
-        }
-
-        @Override
-        public AlarmData[] newArray(int size) {
-            return new AlarmData[size];
-        }
-    };
 
     public int getId() {
         return id;
@@ -94,11 +84,11 @@ public class AlarmData extends LitePalSupport implements Parcelable {
         this.time = time;
     }
 
-    public ToneData getTone() {
+    public Uri getTone() {
         return tone;
     }
 
-    public void setTone(ToneData tone) {
+    public void setTone(Uri tone) {
         this.tone = tone;
     }
 
@@ -117,15 +107,5 @@ public class AlarmData extends LitePalSupport implements Parcelable {
 
     public void setHasSound(boolean hasSound) {
         this.hasSound = hasSound;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(id);
     }
 }

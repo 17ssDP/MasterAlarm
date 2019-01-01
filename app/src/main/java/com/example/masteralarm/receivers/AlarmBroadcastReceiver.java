@@ -13,7 +13,7 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intentpass) {
         Log.d("test","receive the message");
         Intent intent = new Intent(context,AlarmActivity.class);
-        intent.putExtra("alarmdata",intentpass.getParcelableExtra("alarmdata"));
+        intent.putExtra("alarmdata",intentpass.getSerializableExtra("alarmdata"));
         context.startActivity(intent);
     }
 }
