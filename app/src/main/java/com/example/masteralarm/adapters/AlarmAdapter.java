@@ -57,7 +57,6 @@ public class AlarmAdapter extends RecyclerView.Adapter{
 
     @Override
     public int getItemCount() {
-
         return 0;
     }
 
