@@ -40,8 +40,8 @@ public class MasterAlarm extends LitePalApplication {
 
     public AlarmData newAlarm() {
         AlarmData alarm = new AlarmData(1, Calendar.getInstance());
-        alarm.save();
-        alarmData.add(alarm);
+//        alarm.save();
+//        alarmData.add(alarm);
         return alarm;
     }
 

@@ -116,6 +116,7 @@ public class HomeFragment extends BaseFragment {
         setListeners();
         setPageFragments();
         updateClock();
+        //存在某些问题
         Glide.with(this).load(R.mipmap.background2).into(background);
         return view;
     }
