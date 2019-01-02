@@ -6,182 +6,211 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!--//Title-->
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent">-->
-    <!--<Button-->
-    <!--android:id="@+id/cancel_alarm"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="center_vertical"-->
-    <!--android:layout_margin="5dp"-->
-    <!--android:background="@drawable/ic_launcher_background"-->
-    <!--android:textColor="Cancel"-->
-    <!--android:textColorHighlight="#fff"/>-->
+    //Title
 
-    <!--<TextView-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="center"-->
-    <!--android:layout_weight="1"-->
-    <!--android:gravity="center"-->
-    <!--android:text="New Alarm"-->
-    <!--android:textColor="#fff"-->
-    <!--android:textSize="24sp"/>-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
 
-    <!--<Button-->
-    <!--android:id="@+id/add_alarm"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="center"-->
-    <!--android:layout_margin="5dp"-->
-    <!--android:background="@drawable/ic_launcher_background"-->
-    <!--android:text="Add"-->
-    <!--android:textColor="#fff"/>-->
-    <!--</LinearLayout>-->
+        <TextView
+            android:id="@+id/cancel_alarm"
+            android:layout_width="87dp"
+            android:layout_height="39dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_margin="5dp"
+            android:text="Cancel"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="20sp"/>
 
-    <!--//Repeat-->
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="horizontal">-->
-    <!--<TextView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="left|center_vertical"-->
-    <!--android:text="Repeat"-->
-    <!--android:textSize="20sp"-->
-    <!--android:textColor="@color/colorPrimaryDark"/>-->
-    <!--<TextView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="right|center_vertical"-->
-    <!--android:text="Not Repeat"-->
-    <!--android:textSize="18sp"-->
-    <!--android:textColor="@color/colorPrimary"/>-->
-    <!--</LinearLayout>-->
-    <!--<LinearLayout-->
-    <!--android:id="@+id/days"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="56dp"-->
-    <!--android:gravity="center_vertical"-->
-    <!--android:orientation="horizontal"-->
-    <!--android:paddingLeft="12dp"-->
-    <!--android:paddingRight="12dp">-->
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="New Alarm"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="24sp" />
 
-    <!--<com.example.masteralarm.views.DaySwitch-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_height="42dp"-->
-    <!--android:layout_weight="1" />-->
+        <TextView
+            android:id="@+id/add_alarm"
+            android:layout_width="wrap_content"
+            android:layout_height="37dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_margin="5dp"
+            android:text="Add"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="20sp"/>
+    </LinearLayout>
+    //Repeat
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?selectableItemBackground"
+        android:orientation="horizontal"
+        android:paddingBottom="18dp"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        android:paddingTop="18dp">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="Repeat"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="16sp" />
+        <CheckBox
+            android:id="@+id/repeat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:tag=":aesthetic_ignore"
+            android:text="@string/title_repeat" />
 
-    <!--<com.example.masteralarm.views.DaySwitch-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_height="42dp"-->
-    <!--android:layout_weight="1" />-->
+        <!--<LinearLayout-->
+            <!--android:id="@+id/days"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="56dp"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:paddingLeft="12dp"-->
+            <!--android:paddingRight="12dp">-->
 
-    <!--<com.example.masteralarm.views.DaySwitch-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_height="42dp"-->
-    <!--android:layout_weight="1" />-->
+            <!--<com.example.masteralarm.views.DaySwitch-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="42dp"-->
+                <!--android:layout_weight="1" />-->
 
-    <!--<com.example.masteralarm.views.DaySwitch-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_height="42dp"-->
-    <!--android:layout_weight="1" />-->
+            <!--<com.example.masteralarm.views.DaySwitch-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="42dp"-->
+                <!--android:layout_weight="1" />-->
 
-    <!--<com.example.masteralarm.views.DaySwitch-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_height="42dp"-->
-    <!--android:layout_weight="1" />-->
+            <!--<com.example.masteralarm.views.DaySwitch-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="42dp"-->
+                <!--android:layout_weight="1" />-->
 
-    <!--<com.example.masteralarm.views.DaySwitch-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_height="42dp"-->
-    <!--android:layout_weight="1" />-->
+            <!--<com.example.masteralarm.views.DaySwitch-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="42dp"-->
+                <!--android:layout_weight="1" />-->
 
-    <!--<com.example.masteralarm.views.DaySwitch-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_height="42dp"-->
-    <!--android:layout_weight="1" />-->
+            <!--<com.example.masteralarm.views.DaySwitch-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="42dp"-->
+                <!--android:layout_weight="1" />-->
 
-    <!--</LinearLayout>-->
+            <!--<com.example.masteralarm.views.DaySwitch-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="42dp"-->
+                <!--android:layout_weight="1" />-->
 
-    <!--//Sound-->
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="horizontal">-->
-    <!--<TextView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="left|center_vertical"-->
-    <!--android:text="Fresh Air"-->
-    <!--android:textSize="20sp"-->
-    <!--android:textColor="@color/colorPrimaryDark"/>-->
-    <!--<ImageView-->
-    <!--android:id="@+id/ringtoneImage"-->
-    <!--android:layout_width="24dp"-->
-    <!--android:layout_height="24dp"-->
-    <!--android:layout_marginBottom="4dp"-->
-    <!--android:scaleType="centerInside"-->
-    <!--app:srcCompat="@drawable/ic_ringtone_disabled"-->
-    <!--tools:alpha="0.333"-->
-    <!--tools:tint="@color/attribouter_iconColor" />-->
-    <!--</LinearLayout>-->
+            <!--<com.example.masteralarm.views.DaySwitch-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="42dp"-->
+                <!--android:layout_weight="1" />-->
 
-    <!--//Vibrate-->
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="horizontal">-->
-    <!--<TextView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="left|center_vertical"-->
-    <!--android:text="Vibrate"-->
-    <!--android:textSize="20sp"-->
-    <!--android:textColor="@color/colorPrimaryDark"/>-->
+        <!--</LinearLayout>-->
+    </LinearLayout>
+    //Sound
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?selectableItemBackground"
+        android:orientation="horizontal"
+        android:paddingBottom="18dp"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        android:paddingTop="18dp">
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:text="Fresh Air"
+        android:textColor="?android:textColorPrimary"
+        android:textSize="16sp" />
+    <ImageView
+        android:id="@+id/ringtoneImage"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginBottom="4dp"
+        android:scaleType="centerInside"
+        app:srcCompat="@drawable/ic_ringtone_disabled"
+        tools:alpha="0.333"
+        tools:tint="@color/attribouter_iconColor" />
+    </LinearLayout>
 
-    <!--<Switch-->
-    <!--android:id="@+id/vibrate"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="end|center_vertical"-->
-    <!--android:tag=":aesthetic_ignore" />-->
-    <!--</LinearLayout>-->
+    //Vibrate
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?selectableItemBackground"
+        android:orientation="horizontal"
+        android:paddingBottom="18dp"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        android:paddingTop="18dp">
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:text="Virbate"
+        android:textColor="?android:textColorPrimary"
+        android:textSize="16sp" />
 
-    <!--//Name-->
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="horizontal">-->
-    <!--<TextView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="left|center_vertical"-->
-    <!--android:text="Alarm Name"-->
-    <!--android:textSize="20sp"-->
-    <!--android:textColor="@color/colorPrimaryDark"/>-->
+    <Switch
+        android:id="@+id/vibrate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|center_vertical"
+        android:tag=":aesthetic_ignore" />
+    </LinearLayout>
 
-    <!--<EditText-->
-    <!--android:id="@+id/name"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:background="@null"-->
-    <!--android:ellipsize="end"-->
-    <!--android:gravity="center_vertical"-->
-    <!--android:hint="@string/title_alarm_name"-->
-    <!--android:inputType="textCapWords|textAutoComplete|textAutoCorrect"-->
-    <!--android:lines="1"-->
-    <!--android:maxLines="1"-->
-    <!--android:paddingTop="4dp"-->
-    <!--android:paddingBottom="4dp"-->
-    <!--android:singleLine="true"-->
-    <!--android:textColor="?android:textColorPrimary"-->
-    <!--android:textCursorDrawable="@null"-->
-    <!--android:textSize="16sp"-->
-    <!--android:textStyle="bold" />-->
-    <!--</LinearLayout>-->
+    //Name
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?selectableItemBackground"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingTop="18dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="18dp">
+
+        <TextView
+            android:layout_width="145dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="Alarm Name"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="2dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:hint="@string/title_alarm_name"
+            android:inputType="textCapWords|textAutoComplete|textAutoCorrect"
+            android:lines="1"
+            android:maxLines="1"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:singleLine="true"
+            android:textColor="?android:textColorPrimary"
+            android:textCursorDrawable="@null"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 </LinearLayout>

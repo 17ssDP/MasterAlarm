@@ -15,13 +15,19 @@ import static android.preference.PreferenceManager.getDefaultSharedPreferencesNa
 
 public class AlarmData extends LitePalSupport implements Serializable {
     private int id;
-    private boolean isEnable;   // 闹钟是否处于开启状态
-    private boolean isVibrate;  //是否震动
-    private boolean[] repeat;   //重复信息
+    private int isEnable;   // 闹钟是否处于开启状态
+    private int isVibrate;  //是否震动
+    private int day1;
+    private int day2;
+    private int day3;   //重复信息, 1 代表响
+    private int day4;
+    private int day5;
+    private int day6;
+    private int day7;
     private String label;       //闹钟标签
-    private Calendar time;      //闹钟时间
+    private long time;      //闹钟时间
     private transient Uri tone;          //铃声
-    private boolean hasSound;       //是否有声音
+    private int hasSound;       //是否有声音
 
     public AlarmData(int id) {
 
@@ -29,17 +35,17 @@ public class AlarmData extends LitePalSupport implements Serializable {
 
     public AlarmData(int id, Calendar time) {
         this.id = id;
-        this.time = time;
+        this.time = time.getTimeInMillis();
     }
-    public AlarmData(int id, boolean isEnable, boolean isVibrate, boolean[] repeat, String label, Calendar time, ToneData tone) {
-        this.id = id;
-        isEnable = isEnable;
-        isVibrate = isVibrate;
-        repeat = repeat;
-        label = label;
-        time = time;
-        tone = tone;
-    }
+//    public AlarmData(int id, boolean isEnable, boolean isVibrate, boolean[] repeat, String label, Calendar time, ToneData tone) {
+//        this.id = id;
+//        isEnable = isEnable;
+//        isVibrate = isVibrate;
+//        repeat = repeat;
+//        label = label;
+//        time = time;
+//        tone = tone;
+//    }
     public AlarmData(int id, Context context) {
         this.id = id;
 //        SharedPreferences sharedPreferences = context.getSharedPreferences(getDefaultSharedPreferencesName(context),
@@ -47,21 +53,9 @@ public class AlarmData extends LitePalSupport implements Serializable {
     }
 
     public boolean isRepeat() {
-        for (boolean day : repeat) {
-            if (day)
-                return true;
-        }
-
+        if(day1 == 1 || day2 == 1 || day3 == 1|| day4 == 1 || day5 == 1|| day6 == 1 || day7 == 1)
+            return true;
         return false;
-    }
-
-    protected AlarmData(Parcel in) {
-        id = in.readInt();
-        isEnable = in.readByte() != 0;
-        isVibrate = in.readByte() != 0;
-        repeat = in.createBooleanArray();
-        label = in.readString();
-        hasSound = in.readByte() != 0;
     }
 
     public int getId() {
@@ -73,27 +67,33 @@ public class AlarmData extends LitePalSupport implements Serializable {
     }
 
     public boolean isEnable() {
-        return isEnable;
+        return isEnable == 1;
     }
 
     public void setEnable(boolean enable) {
-        isEnable = enable;
+        isEnable = enable? 1 : 0;
     }
 
     public boolean isVibrate() {
-        return isVibrate;
+        return isVibrate == 1;
     }
 
     public void setVibrate(boolean vibrate) {
-        isVibrate = vibrate;
+        isVibrate = vibrate? 1 : 0;
     }
 
     public boolean[] getRepeat() {
-        return repeat;
+        return new boolean[]{day1 == 1, day2 == 1, day3 == 1, day4 == 1, day5 == 1, day6 == 1, day7 == 1};
     }
 
     public void setRepeat(boolean[] repeat) {
-        this.repeat = repeat;
+        day1 = repeat[0]? 1 : 0;
+        day2 = repeat[0]? 1 : 0;
+        day3 = repeat[0]? 1 : 0;
+        day4 = repeat[0]? 1 : 0;
+        day5 = repeat[0]? 1 : 0;
+        day6 = repeat[0]? 1 : 0;
+        day7 = repeat[0]? 1 : 0;
     }
 
     public String getLabel() {
@@ -104,11 +104,11 @@ public class AlarmData extends LitePalSupport implements Serializable {
         this.label = label;
     }
 
-    public Calendar getTime() {
+    public long getTime() {
         return time;
     }
 
-    public void setTime(Calendar time) {
+    public void setTime(long time) {
         this.time = time;
     }
 
@@ -121,10 +121,20 @@ public class AlarmData extends LitePalSupport implements Serializable {
     }
 
     public boolean isHasSound() {
-        return hasSound;
+        return hasSound == 1;
     }
 
     public void setHasSound(boolean hasSound) {
-        this.hasSound = hasSound;
+        this.hasSound = hasSound? 1 : 0;
+    }
+
+    public Calendar getCalendarTime() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(time);
+        return  calendar;
+    }
+
+    public void setCalendarTime(Calendar calendarTime) {
+        time = calendarTime.getTimeInMillis();
     }
 }

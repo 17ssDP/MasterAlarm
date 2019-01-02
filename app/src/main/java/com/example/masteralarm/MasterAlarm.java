@@ -16,14 +16,16 @@ import java.util.TimeZone;
 public class MasterAlarm extends LitePalApplication {
     List<AlarmData> alarmData;
     List<AlarmListener> listeners;
-    private SimpleExoPlayer player;
     @Override
     public void onCreate() {
         super.onCreate();
         Log.d("test","app start");
+ //       LitePal.deleteAll(AlarmData.class);
         alarmData = LitePal.findAll(AlarmData.class);
+        Log.d("Alarm Number", alarmData.size() + " ");
+//        Log.d("Alarm", alarmData.get(0).getLabel());
+//        Log.d("Alarm Calendar", alarmData.get(0).getTime().toString());
         listeners = new ArrayList<>();
-        player = ExoPlayerFactory.newSimpleInstance(this, new DefaultTrackSelector());
         //设置时区
         TimeZone.setDefault(PreferenceData.timeZone);
     }
