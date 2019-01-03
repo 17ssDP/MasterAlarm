@@ -24,6 +24,9 @@ import com.example.masteralarm.data.AlarmData;
 import com.example.masteralarm.utils.FormatUtils;
 import com.example.masteralarm.views.DaySwitch;
 
+import org.litepal.LitePal;
+import org.litepal.LitePalApplication;
+
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -49,6 +52,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
     private int colorForeground = Color.TRANSPARENT;
     private int textColorPrimary = Color.WHITE;
     private int colorAccent = Color.WHITE;
+    private MyThread updateAlarm;
 
     private int expandedPosition = -1;
 
@@ -102,6 +106,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
             repeatIndicator = v.findViewById(R.id.repeatIndicator);
             soundIndicator = v.findViewById(R.id.soundIndicator);
             vibrateIndicator = v.findViewById(R.id.vibrateIndicator);
+        }
+    }
+
+    class MyThread extends Thread{
+        @Override
+        public void run() {
+
+        }
+        public void update(ViewHolder alarmHolder) {
+            AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
+            alarm.updateAll("id = ?", "" + alarm.getId());
         }
     }
     @NonNull
@@ -166,6 +181,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
         alarmHolder.time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
                 //用户可以点击时间部件改变设定的时间
                 Calendar calendar = application.createTimePicker(view.getContext());
@@ -254,6 +270,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
             alarmHolder.vibrate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    if(updateAlarm == null) {
+                        updateAlarm = new MyThread();
+                        try {
+                            updateAlarm.sleep(5);
+                            updateAlarm.run();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
                     AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
                     alarm.setVibrate(!alarm.isVibrate());
 
@@ -284,6 +309,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
 
                 AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
                 application.deleteAlarm(alarm);
+                //delete from database
+                LitePal.delete(AlarmData.class, alarm.getId());
             }
         });
 
