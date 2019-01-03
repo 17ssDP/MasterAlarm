@@ -31,7 +31,6 @@ public class AlarmActivity extends AppCompatActivity {
 
     private MasterAlarm application;
     private AlarmData alarmData;
-    private Vibrator vibrator;
     private Button btn;
     private AlarmService.AlarmBinder binder;
     private ServiceConnection connection = new ServiceConnection() {

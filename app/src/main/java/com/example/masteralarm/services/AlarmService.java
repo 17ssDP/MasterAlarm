@@ -31,6 +31,10 @@ public class AlarmService extends Service {
         super.onCreate();
         vibrator = (Vibrator)getSystemService(VIBRATOR_SERVICE);
         mediaPlayer = new MediaPlayer();
+        binder = new AlarmBinder();
+
+
+        Log.d("Service","Service start");
     }
 
     @Override
@@ -40,7 +44,6 @@ public class AlarmService extends Service {
         isVibrate = intent.getBooleanExtra("isVibrate",true);
         path = intent.getStringExtra("ringPath");
 
-        binder = new AlarmBinder();
         isOn = true;
         try {
             if (isRing){
