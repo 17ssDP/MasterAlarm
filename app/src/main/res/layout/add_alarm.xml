@@ -6,43 +6,55 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    //Title
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize">
 
         <TextView
             android:id="@+id/cancel_alarm"
-            android:layout_width="87dp"
-            android:layout_height="39dp"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             android:layout_gravity="center"
+            android:layout_weight="1"
             android:gravity="center"
-            android:layout_margin="5dp"
             android:text="Cancel"
             android:textColor="?android:textColorPrimary"
-            android:textSize="20sp"/>
+            android:textSize="20sp" />
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:layout_weight="1"
+            android:layout_weight="8"
             android:text="New Alarm"
             android:textColor="?android:textColorPrimary"
             android:textSize="24sp" />
 
         <TextView
-            android:id="@+id/add_alarm"
             android:layout_width="wrap_content"
-            android:layout_height="37dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/add_alarm"
+            android:layout_weight="1"
             android:layout_gravity="center"
             android:gravity="center"
-            android:layout_margin="5dp"
             android:text="Add"
             android:textColor="?android:textColorPrimary"
-            android:textSize="20sp"/>
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/set_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="top|center_horizontal"
+            android:textAlignment="center"
+            android:textSize="50sp"
+            android:textStyle="bold"/>
     </LinearLayout>
     //Repeat
     <LinearLayout
@@ -165,7 +177,7 @@
         android:textSize="16sp" />
 
     <Switch
-        android:id="@+id/vibrate"
+        android:id="@+id/isVibrate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|center_vertical"
@@ -211,6 +223,7 @@
             android:textColor="?android:textColorPrimary"
             android:textCursorDrawable="@null"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:autofillHints="Alarm" />
     </LinearLayout>
 </LinearLayout>
