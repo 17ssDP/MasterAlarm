@@ -20,6 +20,7 @@ import android.widget.TimePicker;
 
 import com.bumptech.glide.Glide;
 import com.example.masteralarm.R;
+import com.example.masteralarm.activity.CommonAwakeActivity;
 import com.example.masteralarm.adapters.SimplePagerAdapter;
 import com.example.masteralarm.data.PreferenceData;
 import com.example.masteralarm.utils.AlarmManagerUtil;
@@ -166,9 +167,11 @@ public class HomeFragment extends BaseFragment {
         timerFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent("com.example.masteralarm.MY_BROADCAST");
-                intent.setComponent(new ComponentName("com.example.masteralarm","com.example.masteralarm.receivers.AlarmBroadcastReceiver"));
-                getContext().sendBroadcast(intent);
+//                Intent intent = new Intent("com.example.masteralarm.MY_BROADCAST");
+//                intent.setComponent(new ComponentName("com.example.masteralarm","com.example.masteralarm.receivers.AlarmBroadcastReceiver"));
+//                getContext().sendBroadcast(intent);
+                Intent intent = new Intent(getContext(),CommonAwakeActivity.class);
+                getContext().startActivity(intent);
             }
         });
         stopwatchFab.setOnClickListener(new View.OnClickListener() {
@@ -177,7 +180,7 @@ public class HomeFragment extends BaseFragment {
             public void onClick(View view) {
                 Calendar choose = Calendar.getInstance();
                 Calendar cur = Calendar.getInstance();
-                choose.add(13,20);
+                choose.add(13,10);
                 //如果时间更小，加上一天
 //                if (cur.after(choose)){
 //                    choose.add(5,1);
@@ -186,9 +189,10 @@ public class HomeFragment extends BaseFragment {
                 alarmData.setEnable(true);
                 alarmData.setLabel("Test Database");
                 alarmData.setRepeat(new boolean[]{false,false,false,false,false,false,false});
-                alarmData.setVibrate(false);
+                alarmData.setVibrate(true);
                 alarmData.setTime(choose);
                 alarmData.setTone(getSystemDefultRingtoneUri());
+                alarmData.setHasSound(true);
 
                 AlarmManagerUtil.setAlarm(getMasterAlarm(),alarmData);
                 Log.d("test","set complete");

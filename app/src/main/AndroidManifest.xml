@@ -5,6 +5,7 @@
 
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.example.masteralarm.MY_BROADCAST"/>
 
     <application
         android:name=".MasterAlarm"
@@ -33,10 +34,18 @@
 
         <activity android:name=".activity.AlarmActivity">
             <intent-filter>
-                <action android:name="com.example.masteralarm.TEST"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="com.example.masteralarm.TEST" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".activity.CommonAwakeActivity"
+            android:launchMode="singleTask">
+
+        </activity>
+
         <service android:name=".services.AlarmService" />
     </application>
 

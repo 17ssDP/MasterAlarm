@@ -76,20 +76,25 @@ public class AlarmManagerUtil {
         }
     }
 
-    //test function
+    //set alarm function
     public static void setAlarm(Context context, AlarmData alarmData) {
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Calendar calendar = alarmData.getTime();
         long intervalMillis = 0;
         Intent intent = new Intent(ALARM_ACTION);
+
+        //保证应用在关闭状态也能接收到广播
+        if(android.os.Build.VERSION.SDK_INT >=12) {
+            intent.setFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);//3.1以后的版本需要设置Intent.FLAG_INCLUDE_STOPPED_PACKAGES
+        }
+
+        intent.setPackage(context.getPackageName());
         intent.setComponent(new ComponentName("com.example.masteralarm","com.example.masteralarm.receivers.AlarmBroadcastReceiver"));
         intent.putExtra("intervalMillis", intervalMillis);
         intent.putExtra("alarmdata",alarmData);
-        PendingIntent sender = PendingIntent.getBroadcast(context, alarmData.getId(), intent, PendingIntent
-                .FLAG_CANCEL_CURRENT);
+        PendingIntent sender = PendingIntent.getBroadcast(context, alarmData.getId(), intent, PendingIntent.FLAG_CANCEL_CURRENT);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            am.setWindow(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                    intervalMillis, sender);
+            am.setWindow(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), intervalMillis, sender);
         } else {
             if (!alarmData.isRepeat()) {
                 am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
