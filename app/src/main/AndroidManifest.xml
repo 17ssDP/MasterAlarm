@@ -33,11 +33,16 @@
         </receiver>
 
         <activity android:name=".activity.AlarmActivity">
-            <intent-filter>
-                <action android:name="com.example.masteralarm.TEST" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
+        <intent-filter>
+            <action android:name="com.example.masteralarm.TEST"/>
+            <category android:name="android.intent.category.DEFAULT"/>
+        </intent-filter>
+        </activity>
+        <activity android:name=".activity.AddAlarmActivity">
+        <intent-filter>
+            <action android:name="com.example.masteralarm.TEST"/>
+            <category android:name="android.intent.category.DEFAULT"/>
+        </intent-filter>
         </activity>
 
         <activity

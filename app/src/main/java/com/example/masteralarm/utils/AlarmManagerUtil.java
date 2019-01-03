@@ -79,7 +79,7 @@ public class AlarmManagerUtil {
     //set alarm function
     public static void setAlarm(Context context, AlarmData alarmData) {
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Calendar calendar = alarmData.getTime();
+        Calendar calendar = alarmData.getCalendarTime();
         long intervalMillis = 0;
         Intent intent = new Intent(ALARM_ACTION);
 

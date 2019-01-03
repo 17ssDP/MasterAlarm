@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import android.widget.TimePicker;
 import com.bumptech.glide.Glide;
 import com.example.masteralarm.R;
 import com.example.masteralarm.activity.CommonAwakeActivity;
+import com.example.masteralarm.activity.AddAlarmActivity;
 import com.example.masteralarm.adapters.SimplePagerAdapter;
 import com.example.masteralarm.data.PreferenceData;
 import com.example.masteralarm.utils.AlarmManagerUtil;
@@ -30,6 +32,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -39,6 +42,9 @@ import jahirfiquitiva.libs.fabsmenu.TitleFAB;
 
 import com.example.masteralarm.data.AlarmData;
 
+import org.litepal.LitePal;
+
+import static android.app.Activity.RESULT_OK;
 import static java.lang.Thread.sleep;
 
 public class HomeFragment extends BaseFragment {
@@ -102,7 +108,7 @@ public class HomeFragment extends BaseFragment {
         stopwatchFab = view.findViewById(R.id.stopwatchFab);
         timerFab = view.findViewById(R.id.timerFab);
         alarmFab = view.findViewById(R.id.alarmFab);
-
+        timePager = view.findViewById(R.id.timePager);
         timeIndicator = view.findViewById(R.id.pageIndicator);
 
         viewPager = view.findViewById(R.id.viewPager);
@@ -114,6 +120,7 @@ public class HomeFragment extends BaseFragment {
         setListeners();
         setPageFragments();
         updateClock();
+        //存在某些问题
         Glide.with(this).load(R.mipmap.background2).into(background);
         return view;
     }
@@ -147,19 +154,27 @@ public class HomeFragment extends BaseFragment {
         alarmFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(getContext(),AddAlarmActivity.class);
+                startActivityForResult(intent, 1);
 //                SQLiteDatabase database = LitePal.getDatabase();
-                AlarmData alarmData = new AlarmData(1);
-                alarmData.setEnable(true);
-                alarmData.setLabel("Test Database");
-                alarmData.setRepeat(new boolean[]{true, true, true, true, true, true, true});
-                alarmData.setVibrate(true);
-                alarmData.setTime(Calendar.getInstance());
+//                AlarmData alarmData = new AlarmData(1);
+//                alarmData.setEnable(true);
+//                alarmData.setLabel("Test Database");
+//                alarmData.setRepeat(new boolean[]{true, true, true, true, true, true, true});
+//                alarmData.setVibrate(true);
+//                alarmData.setCalendarTime(Calendar.getInstance());
 //                alarmData.save();
 //                //读取数据库
 //                List<AlarmData> alarms = LitePal.findAll(AlarmData.class);
-//                Log.d("Read From Database: ", alarms.get(0).getLabel());
-//                Log.d("test", "Test click");
-                getMasterAlarm().addAlarm(alarmData);
+//                Log.i("Database size: ", " " + alarms.size());
+//                for(int i = 0; i < alarms.size(); i++)
+//                    Log.i("Read From Database: ", alarms.get(i).getId() + " ");
+////                alarmData.save();
+////                //读取数据库
+////                List<AlarmData> alarms = LitePal.findAll(AlarmData.class);
+////                Log.d("Read From Database: ", alarms.get(0).getLabel());
+////                Log.d("test", "Test click");
+//                getMasterAlarm().addAlarm(alarmData);
             }
         });
 
@@ -189,8 +204,8 @@ public class HomeFragment extends BaseFragment {
                 alarmData.setEnable(true);
                 alarmData.setLabel("Test Database");
                 alarmData.setRepeat(new boolean[]{false,false,false,false,false,false,false});
-                alarmData.setVibrate(true);
-                alarmData.setTime(choose);
+                alarmData.setVibrate(false);
+                alarmData.setCalendarTime(choose);
                 alarmData.setTone(getSystemDefultRingtoneUri());
                 alarmData.setHasSound(true);
 
@@ -243,5 +258,105 @@ public class HomeFragment extends BaseFragment {
 
     private Uri getSystemDefultRingtoneUri() {
         return RingtoneManager.getActualDefaultRingtoneUri(getContext(), RingtoneManager.TYPE_RINGTONE);
+    }
+
+    //                AlarmData alarmData = new AlarmData(1);
+//                alarmData.setEnable(true);
+//                alarmData.setLabel("Test Database");
+//                alarmData.setRepeat(new boolean[]{true, true, true, true, true, true, true});
+//                alarmData.setVibrate(true);
+//                alarmData.setCalendarTime(Calendar.getInstance());
+//                alarmData.save();
+//                //读取数据库
+//                List<AlarmData> alarms = LitePal.findAll(AlarmData.class);
+//                Log.i("Database size: ", " " + alarms.size());
+//                for(int i = 0; i < alarms.size(); i++)
+//                    Log.i("Read From Database: ", alarms.get(i).getId() + " ");
+////                alarmData.save();
+////                //读取数据库
+////                List<AlarmData> alarms = LitePal.findAll(AlarmData.class);
+////                Log.d("Read From Database: ", alarms.get(0).getLabel());
+////                Log.d("test", "Test click");
+//                getMasterAlarm().addAlarm(alarmData);//                AlarmData alarmData = new AlarmData(1);
+////                alarmData.setEnable(true);
+////                alarmData.setLabel("Test Database");
+////                alarmData.setRepeat(new boolean[]{true, true, true, true, true, true, true});
+////                alarmData.setVibrate(true);
+////                alarmData.setCalendarTime(Calendar.getInstance());
+////                alarmData.save();
+////                //读取数据库
+////                List<AlarmData> alarms = LitePal.findAll(AlarmData.class);
+////                Log.i("Database size: ", " " + alarms.size());
+////                for(int i = 0; i < alarms.size(); i++)
+////                    Log.i("Read From Database: ", alarms.get(i).getId() + " ");
+//////                alarmData.save();
+//////                //读取数据库
+//////                List<AlarmData> alarms = LitePal.findAll(AlarmData.class);
+//////                Log.d("Read From Database: ", alarms.get(0).getLabel());
+//////                Log.d("test", "Test click");
+////                getMasterAlarm().addAlarm(alarmData);//                AlarmData alarmData = new AlarmData(1);
+////                alarmData.setEnable(true);
+////                alarmData.setLabel("Test Database");
+////                alarmData.setRepeat(new boolean[]{true, true, true, true, true, true, true});
+////                alarmData.setVibrate(true);
+////                alarmData.setCalendarTime(Calendar.getInstance());
+////                alarmData.save();
+////                //读取数据库
+////                List<AlarmData> alarms = LitePal.findAll(AlarmData.class);
+////                Log.i("Database size: ", " " + alarms.size());
+////                for(int i = 0; i < alarms.size(); i++)
+////                    Log.i("Read From Database: ", alarms.get(i).getId() + " ");
+//////                alarmData.save();
+//////                //读取数据库
+//////                List<AlarmData> alarms = LitePal.findAll(AlarmData.class);
+//////                Log.d("Read From Database: ", alarms.get(0).getLabel());
+//////                Log.d("test", "Test click");
+////                getMasterAlarm().addAlarm(alarmData);//                AlarmData alarmData = new AlarmData(1);
+////                alarmData.setEnable(true);
+////                alarmData.setLabel("Test Database");
+////                alarmData.setRepeat(new boolean[]{true, true, true, true, true, true, true});
+////                alarmData.setVibrate(true);
+////                alarmData.setCalendarTime(Calendar.getInstance());
+////                alarmData.save();
+////                //读取数据库
+////                List<AlarmData> alarms = LitePal.findAll(AlarmData.class);
+////                Log.i("Database size: ", " " + alarms.size());
+////                for(int i = 0; i < alarms.size(); i++)
+////                    Log.i("Read From Database: ", alarms.get(i).getId() + " ");
+//////                alarmData.save();
+//////                //读取数据库
+//////                List<AlarmData> alarms = LitePal.findAll(AlarmData.class);
+//////                Log.d("Read From Database: ", alarms.get(0).getLabel());
+//////                Log.d("test", "Test click");
+////                getMasterAlarm().addAlarm(alarmData);//                AlarmData alarmData = new AlarmData(1);
+////                alarmData.setEnable(true);
+////                alarmData.setLabel("Test Database");
+////                alarmData.setRepeat(new boolean[]{true, true, true, true, true, true, true});
+////                alarmData.setVibrate(true);
+////                alarmData.setCalendarTime(Calendar.getInstance());
+////                alarmData.save();
+////                //读取数据库
+////                List<AlarmData> alarms = LitePal.findAll(AlarmData.class);
+////                Log.i("Database size: ", " " + alarms.size());
+////                for(int i = 0; i < alarms.size(); i++)
+////                    Log.i("Read From Database: ", alarms.get(i).getId() + " ");
+//////                alarmData.save();
+//////                //读取数据库
+//////                List<AlarmData> alarms = LitePal.findAll(AlarmData.class);
+//////                Log.d("Read From Database: ", alarms.get(0).getLabel());
+//////                Log.d("test", "Test click");
+////                getMasterAlarm().addAlarm(alarmData);
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case 1:
+                if(resultCode == RESULT_OK) {
+                    AlarmData alarmData = (AlarmData)data.getSerializableExtra("New_Alarm");
+                    getMasterAlarm().addAlarm(alarmData);
+                    Log.d("AddAlarm: ", alarmData.getLabel());
+                }
+                break;
+            default:
+        }
     }
 }

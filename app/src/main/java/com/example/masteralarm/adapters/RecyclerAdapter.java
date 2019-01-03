@@ -162,7 +162,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
             }
         });
 
-        alarmHolder.time.setText(FormatUtils.formatShort(application, alarm.getTime().getTime()));
+        alarmHolder.time.setText(FormatUtils.formatShort(application, alarm.getCalendarTime().getTime()));
         alarmHolder.time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
