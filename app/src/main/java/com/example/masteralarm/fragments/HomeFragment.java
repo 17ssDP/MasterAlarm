@@ -41,9 +41,6 @@ import jahirfiquitiva.libs.fabsmenu.FABsMenu;
 import jahirfiquitiva.libs.fabsmenu.TitleFAB;
 
 import com.example.masteralarm.data.AlarmData;
-
-import org.litepal.LitePal;
-
 import static android.app.Activity.RESULT_OK;
 import static java.lang.Thread.sleep;
 
@@ -104,6 +101,9 @@ public class HomeFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        sheet = view.findViewById(R.id.bottomSheet);
+        behavior = BottomSheetBehavior.from(sheet);
+
         menu = view.findViewById(R.id.fabsMenu);
         stopwatchFab = view.findViewById(R.id.stopwatchFab);
         timerFab = view.findViewById(R.id.timerFab);
@@ -132,12 +132,12 @@ public class HomeFragment extends BaseFragment {
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(0).setText(R.string.tab_alarm);
         tabLayout.getTabAt(1).setText(R.string.tab_setting);
-        for (int i = 0; i < tabLayout.getTabCount(); i++){
-
-        }
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                if (tab.getPosition() == 1){
+                    behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                }
             }
 
             @Override
@@ -156,25 +156,6 @@ public class HomeFragment extends BaseFragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(),AddAlarmActivity.class);
                 startActivityForResult(intent, 1);
-//                SQLiteDatabase database = LitePal.getDatabase();
-//                AlarmData alarmData = new AlarmData(1);
-//                alarmData.setEnable(true);
-//                alarmData.setLabel("Test Database");
-//                alarmData.setRepeat(new boolean[]{true, true, true, true, true, true, true});
-//                alarmData.setVibrate(true);
-//                alarmData.setCalendarTime(Calendar.getInstance());
-//                alarmData.save();
-//                //读取数据库
-//                List<AlarmData> alarms = LitePal.findAll(AlarmData.class);
-//                Log.i("Database size: ", " " + alarms.size());
-//                for(int i = 0; i < alarms.size(); i++)
-//                    Log.i("Read From Database: ", alarms.get(i).getId() + " ");
-////                alarmData.save();
-////                //读取数据库
-////                List<AlarmData> alarms = LitePal.findAll(AlarmData.class);
-////                Log.d("Read From Database: ", alarms.get(0).getLabel());
-////                Log.d("test", "Test click");
-//                getMasterAlarm().addAlarm(alarmData);
             }
         });
 
@@ -231,11 +212,6 @@ public class HomeFragment extends BaseFragment {
             }
         }, hour, minute, true).show();
         return c;
-    }
-
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
     }
 
     private void updateClock(){

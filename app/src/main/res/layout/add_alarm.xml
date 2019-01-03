@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    //Title
+    <!--//Title-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,11 +14,12 @@
 
         <TextView
             android:id="@+id/cancel_alarm"
-            android:layout_width="87dp"
+            android:layout_width="wrap_content"
             android:layout_height="39dp"
             android:layout_gravity="center"
             android:gravity="center"
             android:layout_margin="5dp"
+            android:layout_weight="1"
             android:text="Cancel"
             android:textColor="?android:textColorPrimary"
             android:textSize="20sp"/>
@@ -28,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:layout_weight="1"
+            android:layout_weight="8"
             android:text="New Alarm"
             android:textColor="?android:textColorPrimary"
             android:textSize="24sp" />
@@ -36,15 +37,16 @@
         <TextView
             android:id="@+id/add_alarm"
             android:layout_width="wrap_content"
-            android:layout_height="37dp"
+            android:layout_height="39dp"
             android:layout_gravity="center"
+            android:layout_weight="1"
             android:gravity="center"
             android:layout_margin="5dp"
             android:text="Add"
             android:textColor="?android:textColorPrimary"
             android:textSize="20sp"/>
     </LinearLayout>
-    //Repeat
+    <!--//Repeat-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -116,7 +118,7 @@
 
         <!--</LinearLayout>-->
     </LinearLayout>
-    //Sound
+    <!--//Sound-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -145,7 +147,7 @@
         tools:tint="@color/attribouter_iconColor" />
     </LinearLayout>
 
-    //Vibrate
+    <!--//Vibrate-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -172,7 +174,7 @@
         android:tag=":aesthetic_ignore" />
     </LinearLayout>
 
-    //Name
+    <!--//Name-->
 
     <LinearLayout
         android:layout_width="match_parent"

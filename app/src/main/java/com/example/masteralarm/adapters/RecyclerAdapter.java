@@ -167,7 +167,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
             @Override
             public void onClick(View view) {
                 AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
-                //TODO: handle change time operation
+                //用户可以点击时间部件改变设定的时间
+                Calendar calendar = application.createTimePicker(view.getContext());
+                alarm.setCalendarTime(calendar);
+                alarmHolder.time.setText(FormatUtils.formatShort(application,calendar.getTime()));
             }
         });
 
@@ -180,13 +183,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                     AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
                     for (int i = 0; i < 7; i++) {
-                        alarm.getRepeat()[i] = b;
+                        alarm.setRepeat(new boolean[]{b,b,b,b,b,b,b});
                     }
-
-                    //new repeat
-                    boolean[] repeats = new boolean[7];
-                    Arrays.fill(repeats,false);
-                    alarm.setRepeat(repeats);
 
                     Transition transition = new AutoTransition();
                     transition.setDuration(150);
@@ -204,8 +202,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
                     AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
                     alarm.getRepeat()[alarmHolder.days.indexOfChild(daySwitch)] = b;
 
-                    //TODO:some problem here
-//                    alarm.setDays(alarmio, alarm.days);
                     if (!alarm.isRepeat())
                         notifyItemChanged(alarmHolder.getAdapterPosition());
                 }
@@ -243,7 +239,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
             alarmHolder.ringtone.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //choose sound dialog
+                    AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
+                    alarm.setHasSound(!alarm.isHasSound());
+
+                    alarmHolder.ringtoneImage.setImageResource(alarm.isHasSound() ? R.drawable.ic_ringtone : R.drawable.ic_ringtone_disabled);
+
+                    alarmHolder.ringtoneImage.animate().alpha(alarm.isHasSound() ? 1 : 0.333f).setDuration(250).start();
                 }
             });
 
@@ -279,8 +280,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
         alarmHolder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
                 //delete button listener
+
+                AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
                 application.deleteAlarm(alarm);
             }
         });
@@ -296,6 +298,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
         alarmHolder.nameUnderline.setBackgroundColor(textColorPrimary);
 
         int visibility = isExpanded ? View.VISIBLE : View.GONE;
+
+        //颜色组件设置
         if (visibility != alarmHolder.extra.getVisibility()) {
             alarmHolder.extra.setVisibility(visibility);
             Aesthetic.Companion.get()

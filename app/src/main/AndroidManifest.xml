@@ -15,13 +15,44 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MainActivity">
+        <activity
+            android:name=".activity.MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".activity.AlarmActivity"
+            android:screenOrientation="portrait">
+        <intent-filter>
+            <action android:name="com.example.masteralarm.TEST"/>
+            <category android:name="android.intent.category.DEFAULT"/>
+        </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".activity.AddAlarmActivity"
+            android:screenOrientation="portrait">
+        <intent-filter>
+            <action android:name="com.example.masteralarm.TEST"/>
+            <category android:name="android.intent.category.DEFAULT"/>
+        </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".activity.CommonAwakeActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask">
+
+        </activity>
+
+        <service android:name=".services.AlarmService" />
+
+        <service android:name=".services.ForegroundService" />
 
         <receiver
             android:name=".receivers.AlarmBroadcastReceiver"
@@ -31,27 +62,6 @@
                 <action android:name="com.example.masteralarm.MY_BROADCAST" />
             </intent-filter>
         </receiver>
-
-        <activity android:name=".activity.AlarmActivity">
-        <intent-filter>
-            <action android:name="com.example.masteralarm.TEST"/>
-            <category android:name="android.intent.category.DEFAULT"/>
-        </intent-filter>
-        </activity>
-        <activity android:name=".activity.AddAlarmActivity">
-        <intent-filter>
-            <action android:name="com.example.masteralarm.TEST"/>
-            <category android:name="android.intent.category.DEFAULT"/>
-        </intent-filter>
-        </activity>
-
-        <activity
-            android:name=".activity.CommonAwakeActivity"
-            android:launchMode="singleTask">
-
-        </activity>
-
-        <service android:name=".services.AlarmService" />
     </application>
 
 </manifest>
