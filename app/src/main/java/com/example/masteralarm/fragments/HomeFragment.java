@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.bumptech.glide.Glide;
+import com.example.masteralarm.MasterAlarm;
 import com.example.masteralarm.R;
 import com.example.masteralarm.activity.CommonAwakeActivity;
 import com.example.masteralarm.activity.AddAlarmActivity;
@@ -120,8 +121,12 @@ public class HomeFragment extends BaseFragment {
         setListeners();
         setPageFragments();
         updateClock();
-        //存在某些问题
+
+        //加载背景图片
         Glide.with(this).load(R.mipmap.background2).into(background);
+
+        //开启前台服务
+//        getMasterAlarm().startForeground(view.getContext());
         return view;
     }
 
@@ -130,8 +135,17 @@ public class HomeFragment extends BaseFragment {
         viewPager.setAdapter(pagerAdapter);
 
         tabLayout.setupWithViewPager(viewPager);
-        tabLayout.getTabAt(0).setText(R.string.tab_alarm);
-        tabLayout.getTabAt(1).setText(R.string.tab_setting);
+        for (int i = 0; i < tabLayout.getTabCount(); i++){
+            TabLayout.Tab tab = tabLayout.getTabAt(i);
+            switch (i){
+                case 0:
+                    tab.setText(R.string.tab_alarm);
+                    break;
+                case 1:
+                    tab.setText(R.string.tab_setting);
+                    break;
+            }
+        }
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {

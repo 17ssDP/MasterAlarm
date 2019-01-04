@@ -5,10 +5,13 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.TimePicker;
 
+import com.baidu.mapapi.CoordType;
+import com.baidu.mapapi.SDKInitializer;
 import com.example.masteralarm.data.AlarmData;
 import com.example.masteralarm.data.PreferenceData;
 import com.example.masteralarm.interfaces.AlarmListener;
 import com.example.masteralarm.services.ForegroundService;
+import com.example.masteralarm.utils.AlarmManagerUtil;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
@@ -20,21 +23,23 @@ import java.util.List;
 import java.util.TimeZone;
 
 public class MasterAlarm extends LitePalApplication {
+    public static final String ALARM_ACTION = "com.example.masteralarm.MY_BROADCAST";
+
     List<AlarmData> alarmData;
     List<AlarmListener> listeners;
     @Override
     public void onCreate() {
         super.onCreate();
-//        Log.d("test","app start");
- //       LitePal.deleteAll(AlarmData.class);
+
         alarmData = LitePal.findAll(AlarmData.class);
-//        Log.d("Alarm Number", alarmData.size() + " ");
-//        Log.d("Alarm", alarmData.get(0).getLabel());
-//        Log.d("Alarm Calendar", alarmData.get(0).getTime().toString());
         listeners = new ArrayList<>();
         //设置时区
         TimeZone.setDefault(PreferenceData.timeZone);
 //        startForeground();
+
+        //百度地图在使用SDK各组件之前初始化context信息，传入ApplicationContext
+        SDKInitializer.initialize(this);
+        SDKInitializer.setCoordType(CoordType.BD09LL);
 
     }
 
@@ -71,12 +76,16 @@ public class MasterAlarm extends LitePalApplication {
 
     public void addAlarm (AlarmData data){
         alarmData.add(data);
+
+        //调用系统启动闹钟提醒
+        AlarmManagerUtil.setAlarm(this,data);
         onAlarmChange();
     }
 
     public void deleteAlarm(AlarmData data){
         if (alarmData.contains(data)){
             alarmData.remove(data);
+            AlarmManagerUtil.cancelAlarm(this,ALARM_ACTION,data.getId());
             onAlarmChange();
         }
     }
@@ -108,7 +117,7 @@ public class MasterAlarm extends LitePalApplication {
         return c;
     }
 
-    private void startForeground(Context context){
+    public void startForeground(Context context){
         Intent intent = new Intent(context,ForegroundService.class);
         startService(intent);
     }

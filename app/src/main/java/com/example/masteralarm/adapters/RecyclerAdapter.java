@@ -109,16 +109,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
         }
     }
 
-    class MyThread extends Thread{
-        @Override
-        public void run() {
-
-        }
-        public void update(ViewHolder alarmHolder) {
-            AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
-            alarm.updateAll("id = ?", "" + alarm.getId());
-        }
-    }
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -414,5 +404,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
     public void setTextColorPrimary(int colorTextPrimary) {
         this.textColorPrimary = colorTextPrimary;
         notifyDataSetChanged();
+    }
+
+    //更新闹钟信息线程
+    class MyThread extends Thread{
+        @Override
+        public void run() {
+
+        }
+        public void update(ViewHolder alarmHolder) {
+            AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
+            alarm.updateAll("id = ?", "" + alarm.getId());
+        }
     }
 }

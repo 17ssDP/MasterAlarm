@@ -31,16 +31,6 @@ public class AlarmManagerUtil {
         am.cancel(pi);
     }
 
-    /**
-     * @param flag            周期性时间间隔的标志,flag = 0 表示一次性的闹钟, flag = 1 表示每天提醒的闹钟(1天的时间间隔),flag = 2
-     *                        表示按周每周提醒的闹钟（一周的周期性时间间隔）
-     * @param hour            时
-     * @param minute          分
-     * @param id              闹钟的id
-     * @param week            week=0表示一次性闹钟或者按天的周期性闹钟，非0 的情况下是几就代表以周为周期性的周几的闹钟
-     * @param tips            闹钟提示信息
-     * @param soundOrVibrator 2表示声音和震动都执行，1表示只有铃声提醒，0表示只有震动提醒
-     */
     public static void setAlarm(Context context, int flag, int hour, int minute, int id, int
             week, String tips, int soundOrVibrator) {
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -80,8 +70,41 @@ public class AlarmManagerUtil {
     public static void setAlarm(Context context, AlarmData alarmData) {
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Calendar calendar = alarmData.getCalendarTime();
-        long intervalMillis = 0;
+        Calendar cur = Calendar.getInstance();
+        long intervalMillis = 24 * 3600 * 1000;
         Intent intent = new Intent(ALARM_ACTION);
+
+        //如果已经关闭则不需要设置闹钟
+        if (!alarmData.isEnable()){
+            return;
+        }
+
+        cur.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.YEAR,cur.get(Calendar.YEAR));
+        calendar.set(Calendar.DAY_OF_YEAR,cur.get(Calendar.DAY_OF_YEAR));
+        if (!alarmData.isRepeat()){
+            //如果还是落后，日期加一
+            if (calendar.before(cur)){
+                calendar.add(5,1);
+            }
+        }
+        else {
+            int day = cur.get(Calendar.DAY_OF_WEEK);
+            boolean[] isRepeat = alarmData.getRepeat();
+            //day为1时是星期天
+            day--;
+            while (true){
+                if (isRepeat[day]){
+                    if (cur.before(calendar)){
+                        break;
+                    }
+                    //如果不重复，日期加一天
+                    day = (day+1)%7;
+                    calendar.add(5,1);
+                }
+            }
+        }
+
 
         //保证应用在关闭状态也能接收到广播
         if(android.os.Build.VERSION.SDK_INT >=12) {
@@ -91,16 +114,12 @@ public class AlarmManagerUtil {
         intent.setPackage(context.getPackageName());
         intent.setComponent(new ComponentName("com.example.masteralarm","com.example.masteralarm.receivers.AlarmBroadcastReceiver"));
         intent.putExtra("intervalMillis", intervalMillis);
-        intent.putExtra("alarmdata",alarmData);
+        intent.putExtra("alarmid",alarmData.getId());
         PendingIntent sender = PendingIntent.getBroadcast(context, alarmData.getId(), intent, PendingIntent.FLAG_CANCEL_CURRENT);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             am.setWindow(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), intervalMillis, sender);
         } else {
-            if (!alarmData.isRepeat()) {
-                am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
-            } else {
-                am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), intervalMillis, sender);
-            }
+            am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
         }
     }
 

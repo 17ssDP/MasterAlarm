@@ -144,7 +144,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
-        android:text="Fresh Air"
+        android:text="Ring"
         android:textColor="?android:textColorPrimary"
         android:textSize="16sp" />
     <ImageView
@@ -177,12 +177,15 @@
         android:textColor="?android:textColorPrimary"
         android:textSize="16sp" />
 
-    <Switch
-        android:id="@+id/isVibrate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|center_vertical"
-        android:tag=":aesthetic_ignore" />
+        <ImageView
+            android:id="@+id/vibrateImage"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginBottom="4dp"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/ic_ringtone_disabled"
+            tools:alpha="0.333"
+            tools:tint="@color/attribouter_iconColor" />
     </LinearLayout>
 
     <!--//Name-->
