@@ -22,6 +22,7 @@ import android.widget.TimePicker;
 import com.bumptech.glide.Glide;
 import com.example.masteralarm.MasterAlarm;
 import com.example.masteralarm.R;
+import com.example.masteralarm.activity.AddLBSAlarmActivity;
 import com.example.masteralarm.activity.CommonAwakeActivity;
 import com.example.masteralarm.activity.AddAlarmActivity;
 import com.example.masteralarm.adapters.SimplePagerAdapter;
@@ -188,24 +189,26 @@ public class HomeFragment extends BaseFragment {
             boolean flag = false;
             @Override
             public void onClick(View view) {
-                Calendar choose = Calendar.getInstance();
-                Calendar cur = Calendar.getInstance();
-                choose.add(13,10);
-                //如果时间更小，加上一天
-//                if (cur.after(choose)){
-//                    choose.add(5,1);
-//                }
-                AlarmData alarmData = new AlarmData(1);
-                alarmData.setEnable(true);
-                alarmData.setLabel("Test Database");
-                alarmData.setRepeat(new boolean[]{false,false,false,false,false,false,false});
-                alarmData.setVibrate(false);
-                alarmData.setCalendarTime(choose);
-                alarmData.setTone(getSystemDefultRingtoneUri());
-                alarmData.setHasSound(true);
-
-                AlarmManagerUtil.setAlarm(getMasterAlarm(),alarmData);
-                Log.d("test","set complete");
+                Intent intent = new Intent(getContext(),AddLBSAlarmActivity.class);
+                startActivityForResult(intent,1);
+//                Calendar choose = Calendar.getInstance();
+//                Calendar cur = Calendar.getInstance();
+//                choose.add(13,10);
+//                //如果时间更小，加上一天
+////                if (cur.after(choose)){
+////                    choose.add(5,1);
+////                }
+//                AlarmData alarmData = new AlarmData(1);
+//                alarmData.setEnable(true);
+//                alarmData.setLabel("Test Database");
+//                alarmData.setRepeat(new boolean[]{false,false,false,false,false,false,false});
+//                alarmData.setVibrate(false);
+//                alarmData.setCalendarTime(choose);
+//                alarmData.setTone(getSystemDefultRingtoneUri());
+//                alarmData.setHasSound(true);
+//
+//                AlarmManagerUtil.setAlarm(getMasterAlarm(),alarmData);
+//                Log.d("test","set complete");
             }
         });
     }

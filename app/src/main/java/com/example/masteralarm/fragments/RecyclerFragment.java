@@ -53,6 +53,20 @@ public class RecyclerFragment extends BasePageFragment implements AlarmListener 
     }
 
     @Override
+    public void onAlarmChanged() {
+        //当增加或者删除闹钟时，更新界面的显示内容
+        if (alarmsAdapter != null) {
+            alarmsAdapter.notifyDataSetChanged();
+            onChanged();
+        }
+    }
+
+    private void onChanged() {
+        if (empty != null && alarmsAdapter != null)
+            empty.setVisibility(alarmsAdapter.getItemCount() > 0 ? View.GONE : View.VISIBLE);
+    }
+
+    @Override
     public String getTitle() {
         return "Alarm";
     }
@@ -92,19 +106,5 @@ public class RecyclerFragment extends BasePageFragment implements AlarmListener 
         colorForegroundSubscription.dispose();
         textColorPrimarySubscription.dispose();
         super.onDestroyView();
-    }
-
-    @Override
-    public void onAlarmChanged() {
-        //当增加或者删除闹钟时，更新界面的显示内容
-        if (alarmsAdapter != null) {
-            alarmsAdapter.notifyDataSetChanged();
-            onChanged();
-        }
-    }
-
-    private void onChanged() {
-        if (empty != null && alarmsAdapter != null)
-            empty.setVisibility(alarmsAdapter.getItemCount() > 0 ? View.GONE : View.VISIBLE);
     }
 }

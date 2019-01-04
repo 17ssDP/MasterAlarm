@@ -8,8 +8,10 @@ import android.widget.TimePicker;
 import com.baidu.mapapi.CoordType;
 import com.baidu.mapapi.SDKInitializer;
 import com.example.masteralarm.data.AlarmData;
+import com.example.masteralarm.data.LBSAlarmData;
 import com.example.masteralarm.data.PreferenceData;
 import com.example.masteralarm.interfaces.AlarmListener;
+import com.example.masteralarm.interfaces.LBSAlarmListener;
 import com.example.masteralarm.services.ForegroundService;
 import com.example.masteralarm.utils.AlarmManagerUtil;
 import com.google.android.exoplayer2.ExoPlayerFactory;
@@ -26,16 +28,19 @@ public class MasterAlarm extends LitePalApplication {
     public static final String ALARM_ACTION = "com.example.masteralarm.MY_BROADCAST";
 
     List<AlarmData> alarmData;
+    List<LBSAlarmData> lbsAlarmData;
     List<AlarmListener> listeners;
+    List<LBSAlarmListener> lbsAlarmListeners;
     @Override
     public void onCreate() {
         super.onCreate();
 
         alarmData = LitePal.findAll(AlarmData.class);
+//        lbsAlarmData = LitePal.findAll(LBSAlarmData.class);
         listeners = new ArrayList<>();
+        lbsAlarmListeners = new ArrayList<>();
         //设置时区
         TimeZone.setDefault(PreferenceData.timeZone);
-//        startForeground();
 
         //百度地图在使用SDK各组件之前初始化context信息，传入ApplicationContext
         SDKInitializer.initialize(this);
@@ -47,21 +52,26 @@ public class MasterAlarm extends LitePalApplication {
         return alarmData;
     }
 
+    public List<LBSAlarmData> getLbsAlarmData() {
+        return lbsAlarmData;
+    }
+
+    public void removeLBSAlarm(LBSAlarmData alarmData){
+
+//        LitePal.delete(LBSAlarmData.class,alarmData.getId());
+        lbsAlarmData.remove(alarmData);
+    }
+
     public void removeAlarm(AlarmData alarm) {
         //从数据库中删除
         LitePal.delete(AlarmData.class, alarm.getId());
         alarmData.remove(alarm);
     }
 
-    public AlarmData newAlarm() {
-        AlarmData alarm = new AlarmData(1, Calendar.getInstance());
-//        alarm.save();
-//        alarmData.add(alarm);
-        return alarm;
-    }
-
-    private void initializeData () {
-
+    public void onLBSAlarmChange() {
+        for (LBSAlarmListener listener : lbsAlarmListeners){
+            listener.onLBSAlarmChanged();
+        }
     }
 
     public void onAlarmChange () {
@@ -70,8 +80,18 @@ public class MasterAlarm extends LitePalApplication {
         }
     }
 
+    public void addLBSAlarmListener (LBSAlarmListener listener){
+        lbsAlarmListeners.add(listener);
+    }
+
     public void addListener (AlarmListener listener){
         listeners.add(listener);
+    }
+
+    public void addLBSAlarm(LBSAlarmData data){
+        lbsAlarmData.add(data);
+
+        //当加入LBS闹钟时需要的操作
     }
 
     public void addAlarm (AlarmData data){
