@@ -53,7 +53,7 @@ public class HomeFragment extends BaseFragment {
     public static final int UPDATE_CLOCK = 1;
     public static final int RESULT_ADDLBSALARM = 10;
     public static final int UPDATE_BACKGROUND = 2;
-    
+
     private FABsMenu menu;
     private TitleFAB stopwatchFab;
     private TitleFAB timerFab;
