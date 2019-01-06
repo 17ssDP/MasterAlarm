@@ -2,20 +2,19 @@ package com.example.masteralarm.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
-import android.content.ComponentName;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
+import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -24,28 +23,37 @@ import com.example.masteralarm.R;
 import com.example.masteralarm.activity.AddLBSAlarmActivity;
 import com.example.masteralarm.activity.CommonAwakeActivity;
 import com.example.masteralarm.activity.AddAlarmActivity;
+import com.example.masteralarm.activity.MicroAwakeActivity;
 import com.example.masteralarm.adapters.SimplePagerAdapter;
 import com.example.masteralarm.data.LBSAlarmData;
+import com.example.masteralarm.utils.AlarmManagerUtil;
 import com.example.masteralarm.utils.FormatUtils;
+import com.example.masteralarm.utils.HttpUtil;
 import com.example.masteralarm.views.PageIndicatorView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.tabs.TabLayout;
 
+import java.io.IOException;
 import java.util.Calendar;
-
+import java.util.Objects;
 import androidx.viewpager.widget.ViewPager;
 import jahirfiquitiva.libs.fabsmenu.FABsMenu;
 import jahirfiquitiva.libs.fabsmenu.TitleFAB;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 import com.example.masteralarm.data.AlarmData;
 import static android.app.Activity.RESULT_OK;
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 import static java.lang.Thread.sleep;
 
 public class HomeFragment extends BaseFragment {
 
     public static final int UPDATE_CLOCK = 1;
     public static final int RESULT_ADDLBSALARM = 10;
-
+    public static final int UPDATE_BACKGROUND = 2;
+    
     private FABsMenu menu;
     private TitleFAB stopwatchFab;
     private TitleFAB timerFab;
@@ -62,6 +70,7 @@ public class HomeFragment extends BaseFragment {
     private SimplePagerAdapter timeAdapter;
     private TabLayout tabLayout;
     private PageIndicatorView timeIndicator;
+    private String bingPic;
 
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler(){
@@ -74,6 +83,8 @@ public class HomeFragment extends BaseFragment {
                     text = FormatUtils.format(getMasterAlarm(),calendar.getTime());
                     clock.setText(text);
                     break;
+                case UPDATE_BACKGROUND:
+                    Glide.with(Objects.requireNonNull(getContext())).load(bingPic).into(background);
                 default:break;
             }
         }
@@ -120,8 +131,13 @@ public class HomeFragment extends BaseFragment {
         updateClock();
 
         //加载背景图片
-        Glide.with(this).load(R.mipmap.background2).into(background);
-
+        SharedPreferences prefs = getDefaultSharedPreferences(getContext());
+        String bingPic = prefs.getString("bing_pic", null);
+        if(bingPic != null) {
+            Glide.with(this).load(bingPic).into(background);
+        } else {
+            loadBingPic();
+        }
         //开启前台服务
         getMasterAlarm().startForeground(view.getContext());
         return view;
@@ -180,7 +196,7 @@ public class HomeFragment extends BaseFragment {
 //                Intent intent = new Intent("com.example.masteralarm.MY_BROADCAST");
 //                intent.setComponent(new ComponentName("com.example.masteralarm","com.example.masteralarm.receivers.AlarmBroadcastReceiver"));
 //                getContext().sendBroadcast(intent);
-                Intent intent = new Intent(getContext(),CommonAwakeActivity.class);
+                Intent intent = new Intent(getContext(),MicroAwakeActivity.class);
                 getContext().startActivity(intent);
             }
         });
@@ -284,5 +300,33 @@ public class HomeFragment extends BaseFragment {
                 break;
             default:
         }
+    }
+
+    /* 加载每日Bing一图*/
+    private void loadBingPic() {
+        String requestBingPic = "http://guolin.tech/api/bing_pic";
+        HttpUtil.sendOkHttpRequest(requestBingPic, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                assert response.body() != null;
+                bingPic = response.body().string();
+                SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(HomeFragment.this.getContext()).edit();
+                editor.putString("bing_pic", bingPic);
+                editor.apply();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Message message = new Message();
+                        message.what = UPDATE_BACKGROUND;
+                        handler.sendMessage(message);
+                    }
+                }).start();
+            }
+        });
     }
 }

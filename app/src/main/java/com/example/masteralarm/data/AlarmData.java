@@ -28,6 +28,7 @@ public class AlarmData extends LitePalSupport implements Serializable {
     private long time;      //闹钟时间
     private transient Uri tone;          //铃声
     private int hasSound;       //是否有声音
+    private int type = 1;       //闹钟类型：0为普通闹钟、1为甩手闹钟、2为吹气闹钟、3为地点闹钟
 
     public AlarmData(int id) {
 
@@ -136,5 +137,14 @@ public class AlarmData extends LitePalSupport implements Serializable {
 
     public void setCalendarTime(Calendar calendarTime) {
         time = calendarTime.getTimeInMillis();
+    }
+
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        type = type;
     }
 }
