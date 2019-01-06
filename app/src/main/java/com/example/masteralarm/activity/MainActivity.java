@@ -2,11 +2,15 @@ package com.example.masteralarm.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -45,6 +49,10 @@ public class MainActivity extends AestheticActivity {
         }
 
         masterAlarm = (MasterAlarm)getApplicationContext();
+
+        //提醒用户需要给予应用通知栏权限
+        needNotificationPermission();
+
         if (savedInstanceState == null){
             fragment = new SplashFragment();
             getSupportFragmentManager().beginTransaction().add(R.id.fragment,fragment).commit();
@@ -53,6 +61,7 @@ public class MainActivity extends AestheticActivity {
             fragment = new HomeFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment,fragment).commit();
         }
+
     }
 
     @Override
@@ -77,4 +86,17 @@ public class MainActivity extends AestheticActivity {
         }
     }
 
+    private void needNotificationPermission(){
+        NotificationManagerCompat manager = NotificationManagerCompat.from(masterAlarm);
+        boolean isOpened = manager.areNotificationsEnabled();
+        if (!isOpened){
+            Toast.makeText(this,"应用需要通知栏权限",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent();
+            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            Uri uri = Uri.fromParts("package", masterAlarm.getPackageName(), null);
+            intent.setData(uri);
+            startActivity(intent);
+            finish();
+        }
+    }
 }

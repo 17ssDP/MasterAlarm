@@ -36,7 +36,7 @@ public class MasterAlarm extends LitePalApplication {
         super.onCreate();
 
         alarmData = LitePal.findAll(AlarmData.class);
-//        lbsAlarmData = LitePal.findAll(LBSAlarmData.class);
+        lbsAlarmData = LitePal.findAll(LBSAlarmData.class);
         listeners = new ArrayList<>();
         lbsAlarmListeners = new ArrayList<>();
         //设置时区
@@ -91,6 +91,7 @@ public class MasterAlarm extends LitePalApplication {
     public void addLBSAlarm(LBSAlarmData data){
         lbsAlarmData.add(data);
 
+        onLBSAlarmChange();
         //当加入LBS闹钟时需要的操作
     }
 

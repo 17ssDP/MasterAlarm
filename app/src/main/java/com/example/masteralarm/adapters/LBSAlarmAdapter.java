@@ -50,8 +50,8 @@ public class LBSAlarmAdapter extends RecyclerView.Adapter {
 
             enable = itemView.findViewById(R.id.lbs_enable);
             label = itemView.findViewById(R.id.lbs_name);
-            ringtoneImage = itemView.findViewById(R.id.lbs_soundIndicator);
-            vibrateImage = itemView.findViewById(R.id.lbs_vibrateIndicator);
+//            ringtoneImage = itemView.findViewById(R.id.lbs_soundIndicator);
+//            vibrateImage = itemView.findViewById(R.id.lbs_vibrateIndicator);
             startPoint = itemView.findViewById(R.id.lbs_start_point);
             endPoint = itemView.findViewById(R.id.lbs_end_point);
             delete = itemView.findViewById(R.id.lbs_delete);
@@ -62,13 +62,13 @@ public class LBSAlarmAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_lbs_alarm,parent,false);
-        RecyclerAdapter.ViewHolder holder = new RecyclerAdapter.ViewHolder(view);
+        ViewHolder holder = new ViewHolder(view);
         return holder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder h, int position) {
-        final LBSAlarmAdapter.ViewHolder holder = (ViewHolder)h;
+        final LBSAlarmAdapter.ViewHolder holder = (LBSAlarmAdapter.ViewHolder)h;
 
         final LBSAlarmData data = lbsAlarmData.get(position);
         holder.label.setText(data.getName());
@@ -87,10 +87,10 @@ public class LBSAlarmAdapter extends RecyclerView.Adapter {
                 data.setIsEnable(b);
             }
         });
-        holder.vibrateImage.setImageResource(data.getIsVibrate()?R.drawable.ic_vibrate:R.drawable.ic_vibrate_none);
-        holder.vibrateImage.setColorFilter(textColorPrimary);
-        holder.ringtoneImage.setImageResource(data.getIsRing()?R.drawable.ic_ringtone:R.drawable.ic_ringtone_disabled);
-        holder.ringtoneImage.setColorFilter(textColorPrimary);
+//        holder.vibrateImage.setImageResource(data.getIsVibrate()?R.drawable.ic_vibrate:R.drawable.ic_vibrate_none);
+//        holder.vibrateImage.setColorFilter(textColorPrimary);
+//        holder.ringtoneImage.setImageResource(data.getIsRing()?R.drawable.ic_ringtone:R.drawable.ic_ringtone_disabled);
+//        holder.ringtoneImage.setColorFilter(textColorPrimary);
     }
 
     @Override

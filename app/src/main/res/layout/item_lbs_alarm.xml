@@ -29,7 +29,7 @@
                 android:paddingLeft="4dp"
                 android:paddingRight="4dp"
                 android:textColor="?android:textColorSecondary"
-                android:textSize="35sp"
+                android:textSize="25sp"
                 android:textAllCaps="false"
                 tools:text="LBS Alarm" />
 
@@ -45,59 +45,74 @@
         <LinearLayout
             android:layout_marginTop="8dp"
             android:gravity="center_vertical"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="4dp"
-                android:layout_width="80dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="left"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/ic_start"
-                />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingBottom="4dp"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/ic_start"
+                    />
 
-            <TextView
-                android:text="复旦大学张江校区"
-                android:id="@+id/lbs_start_point"
-                android:textColor="?android:textColorPrimary"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textAllCaps="true"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="4dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                <TextView
+                    android:text="复旦大学张江校区"
+                    android:id="@+id/lbs_start_point"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingBottom="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
-            <ImageView
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="4dp"
-                android:layout_width="80dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="left"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/ic_end"
-                />
+            </LinearLayout>
 
-            <TextView
-                android:text="复旦大学邯郸校区"
-                android:id="@+id/lbs_end_point"
-                android:textColor="?android:textColorPrimary"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textAllCaps="true"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="4dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingBottom="4dp"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/ic_end"
+                    />
+
+                <TextView
+                    android:text="复旦大学邯郸校区"
+                    android:id="@+id/lbs_end_point"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingBottom="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout
@@ -108,26 +123,9 @@
             android:paddingLeft="8dp"
             android:paddingRight="8dp">
 
-            <TextView
-                android:id="@+id/lbs_delete"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="start|center_vertical"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:gravity="center"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="4dp"
-                android:text="@string/title_delete"
-                android:textAlignment="center"
-                android:textAllCaps="true"
-                android:textColor="?android:textColorPrimary"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-
             <LinearLayout
                 android:id="@+id/lbs_indicators"
+                android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="end|center_vertical"
@@ -144,7 +142,7 @@
                     android:layout_gravity="center"
                     android:scaleType="centerInside"
                     app:srcCompat="@drawable/ic_sound"
-                    tools:alpha="0.333"
+                    tools:alpha="1"
                     tools:tint="@color/attribouter_iconColor" />
 
                 <ImageView
@@ -154,9 +152,28 @@
                     android:layout_gravity="center"
                     android:scaleType="centerInside"
                     app:srcCompat="@drawable/ic_vibrate"
+                    tools:alpha="1"
                     tools:tint="@color/attribouter_iconColor" />
 
             </LinearLayout>
+
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/lbs_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="start|center_vertical"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:gravity="center"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="4dp"
+                android:text="@string/title_delete"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="?android:textColorPrimary"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 

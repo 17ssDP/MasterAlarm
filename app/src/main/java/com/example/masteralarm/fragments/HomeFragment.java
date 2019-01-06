@@ -20,23 +20,18 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.bumptech.glide.Glide;
-import com.example.masteralarm.MasterAlarm;
 import com.example.masteralarm.R;
 import com.example.masteralarm.activity.AddLBSAlarmActivity;
 import com.example.masteralarm.activity.CommonAwakeActivity;
 import com.example.masteralarm.activity.AddAlarmActivity;
 import com.example.masteralarm.adapters.SimplePagerAdapter;
-import com.example.masteralarm.data.PreferenceData;
-import com.example.masteralarm.utils.AlarmManagerUtil;
+import com.example.masteralarm.data.LBSAlarmData;
 import com.example.masteralarm.utils.FormatUtils;
 import com.example.masteralarm.views.PageIndicatorView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.Calendar;
-import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
 
 import androidx.viewpager.widget.ViewPager;
 import jahirfiquitiva.libs.fabsmenu.FABsMenu;
@@ -49,6 +44,7 @@ import static java.lang.Thread.sleep;
 public class HomeFragment extends BaseFragment {
 
     public static final int UPDATE_CLOCK = 1;
+    public static final int RESULT_ADDLBSALARM = 10;
 
     private FABsMenu menu;
     private TitleFAB stopwatchFab;
@@ -127,12 +123,12 @@ public class HomeFragment extends BaseFragment {
         Glide.with(this).load(R.mipmap.background2).into(background);
 
         //开启前台服务
-//        getMasterAlarm().startForeground(view.getContext());
+        getMasterAlarm().startForeground(view.getContext());
         return view;
     }
 
     private void setPageFragments() {
-        pagerAdapter = new SimplePagerAdapter(getChildFragmentManager(), new RecyclerFragment(), new SettingFragment());
+        pagerAdapter = new SimplePagerAdapter(getChildFragmentManager(), new RecyclerFragment(), new LBSAlarmFragment(), new SettingFragment());
         viewPager.setAdapter(pagerAdapter);
 
         tabLayout.setupWithViewPager(viewPager);
@@ -143,6 +139,9 @@ public class HomeFragment extends BaseFragment {
                     tab.setText(R.string.tab_alarm);
                     break;
                 case 1:
+                    tab.setText("LBSAlarm");
+                    break;
+                case 2:
                     tab.setText(R.string.tab_setting);
                     break;
             }
@@ -150,7 +149,7 @@ public class HomeFragment extends BaseFragment {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                if (tab.getPosition() == 1){
+                if (tab.getPosition() == 2){
                     behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                 }
             }
@@ -190,7 +189,20 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(),AddLBSAlarmActivity.class);
-                startActivityForResult(intent,1);
+                startActivityForResult(intent,RESULT_ADDLBSALARM);
+//                LBSAlarmData data = new LBSAlarmData();
+//                data.setIsEnable(true);
+//                data.setIsRing(true);
+//                data.setIsVibrate(false);
+//                data.setName("Test");
+//                data.setStart("Home");
+//                data.setEnd("School");
+//                data.setLatitude(132.0336);
+//                data.setLongitude(20.56);
+//                data.save();
+//                getMasterAlarm().addLBSAlarm(data);
+
+
 //                Calendar choose = Calendar.getInstance();
 //                Calendar cur = Calendar.getInstance();
 //                choose.add(13,10);
@@ -263,6 +275,11 @@ public class HomeFragment extends BaseFragment {
                     Log.d("AddAlarm: ", alarmData.getLabel());
                 }
                 break;
+            case RESULT_ADDLBSALARM:
+                if (resultCode == RESULT_OK) {
+                    LBSAlarmData lbsAlarmData = (LBSAlarmData) data.getSerializableExtra("New_alarm");
+                    getMasterAlarm().addLBSAlarm(lbsAlarmData);
+                }
             default:
         }
     }

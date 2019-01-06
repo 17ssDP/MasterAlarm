@@ -119,6 +119,7 @@ public class AlarmManagerUtil {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             am.setWindow(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), intervalMillis, sender);
         } else {
+            //setExact
             am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
         }
     }

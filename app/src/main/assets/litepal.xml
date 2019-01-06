@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <litepal>
     <dbname value="Alarm"></dbname>
-    <version value="3"></version>
+    <version value="4"></version>
     <list>
         <mapping class="com.example.masteralarm.data.AlarmData"></mapping>
     </list>
+    <list>
+        <mapping class="com.example.masteralarm.data.LBSAlarmData"></mapping>
+    </list>
 </litepal>
+
