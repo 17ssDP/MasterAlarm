@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tc="http://schemas.android.com/apk/res-auto"
+    android:keepScreenOn="true"
+    tools:context=".activity.CommonAwakeActivity">
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop" />
+
+    <View
+        android:id="@+id/overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.5"
+        android:background="@color/colorPrimary" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Nov 2018, 3:49"
+                android:textAlignment="center"
+                android:textColor="?android:textColorPrimary"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="-0:13"
+                android:textAlignment="center"
+                android:textColor="?android:textColorPrimary"
+                android:textSize="48sp" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+            <com.example.masteralarm.views.CircleProgressView
+                android:id="@+id/tasks_view"
+                android:layout_width="223dp"
+                android:layout_height="223dp"
+                tc:circleColor="@color/white"
+                tc:radius="50dip"
+                tc:ringBgColor="@color/white2"
+                tc:ringColor="@color/colorRed"
+                tc:strokeWidth="10dip" />
+        </LinearLayout>
+
+        <me.jfenn.slideactionview.SlideActionView
+            android:id="@+id/slideView"
+            android:layout_width="match_parent"
+            android:layout_height="76dp" />
+
+    </LinearLayout>
+
+</FrameLayout>

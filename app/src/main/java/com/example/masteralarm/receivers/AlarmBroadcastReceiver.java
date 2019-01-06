@@ -14,7 +14,7 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intentpass) {
         Log.d("test","receive the message");
-        Toast.makeText(context,"receive message",Toast.LENGTH_SHORT).show();
+      //  Toast.makeText(context,"receive message",Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(context,CommonAwakeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
