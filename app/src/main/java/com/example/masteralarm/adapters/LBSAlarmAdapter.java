@@ -24,6 +24,7 @@ public class LBSAlarmAdapter extends RecyclerView.Adapter {
     private MasterAlarm application;
     private RecyclerView recycler;
     private FragmentManager fragmentManager;
+
     private int colorForeground = Color.TRANSPARENT;
     private int textColorPrimary = Color.WHITE;
     private int colorAccent = Color.WHITE;
@@ -50,8 +51,8 @@ public class LBSAlarmAdapter extends RecyclerView.Adapter {
 
             enable = itemView.findViewById(R.id.lbs_enable);
             label = itemView.findViewById(R.id.lbs_name);
-//            ringtoneImage = itemView.findViewById(R.id.lbs_soundIndicator);
-//            vibrateImage = itemView.findViewById(R.id.lbs_vibrateIndicator);
+            ringtoneImage = itemView.findViewById(R.id.lbs_soundIndicator);
+            vibrateImage = itemView.findViewById(R.id.lbs_vibrateIndicator);
             startPoint = itemView.findViewById(R.id.lbs_start_point);
             endPoint = itemView.findViewById(R.id.lbs_end_point);
             delete = itemView.findViewById(R.id.lbs_delete);
@@ -81,16 +82,24 @@ public class LBSAlarmAdapter extends RecyclerView.Adapter {
         });
         holder.startPoint.setText(data.getStart());
         holder.endPoint.setText(data.getEnd());
+        holder.enable.setChecked(data.getIsEnable());
         holder.enable.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 data.setIsEnable(b);
             }
         });
-//        holder.vibrateImage.setImageResource(data.getIsVibrate()?R.drawable.ic_vibrate:R.drawable.ic_vibrate_none);
-//        holder.vibrateImage.setColorFilter(textColorPrimary);
-//        holder.ringtoneImage.setImageResource(data.getIsRing()?R.drawable.ic_ringtone:R.drawable.ic_ringtone_disabled);
-//        holder.ringtoneImage.setColorFilter(textColorPrimary);
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LBSAlarmData lbsAlarmData = getAlarm(holder.getAdapterPosition());
+                application.deleteLBSAlarm(lbsAlarmData);
+            }
+        });
+        holder.vibrateImage.setImageResource(data.getIsVibrate()?R.drawable.ic_vibrate:R.drawable.ic_vibrate_none);
+        holder.vibrateImage.setColorFilter(textColorPrimary);
+        holder.ringtoneImage.setImageResource(data.getIsRing()?R.drawable.ic_ringtone:R.drawable.ic_ringtone_disabled);
+        holder.ringtoneImage.setColorFilter(textColorPrimary);
     }
 
     @Override
@@ -98,5 +107,21 @@ public class LBSAlarmAdapter extends RecyclerView.Adapter {
         return lbsAlarmData.size();
     }
 
+    private LBSAlarmData getAlarm(int position){
+        return lbsAlarmData.get(position);
+    }
 
+    public void setColorAccent(int colorAccent) {
+        this.colorAccent = colorAccent;
+        notifyDataSetChanged();
+    }
+
+    public void setColorForeground(int colorForeground) {
+        this.colorForeground = colorForeground;
+    }
+
+    public void setTextColorPrimary(int colorTextPrimary) {
+        this.textColorPrimary = colorTextPrimary;
+        notifyDataSetChanged();
+    }
 }

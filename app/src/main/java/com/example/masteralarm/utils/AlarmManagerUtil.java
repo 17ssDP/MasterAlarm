@@ -117,18 +117,14 @@ public class AlarmManagerUtil {
         intent.putExtra("alarmid",alarmData.getId());
         PendingIntent sender = PendingIntent.getBroadcast(context, alarmData.getId(), intent, PendingIntent.FLAG_CANCEL_CURRENT);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            am.setWindow(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), intervalMillis, sender);
+            am.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
+//            am.setWindow(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), intervalMillis, sender);
         } else {
             //setExact
-            am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
+            am.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
         }
     }
 
-    /**
-     * @param weekflag 传入的是周几
-     * @param dateTime 传入的是时间戳（设置当天的年月日+从选择框拿来的时分秒）
-     * @return 返回起始闹钟时间的时间戳
-     */
     private static long calMethod(int weekflag, long dateTime) {
         long time = 0;
         //weekflag == 0表示是按天为周期性的时间间隔或者是一次行的，weekfalg非0时表示每周几的闹钟并以周为时间间隔

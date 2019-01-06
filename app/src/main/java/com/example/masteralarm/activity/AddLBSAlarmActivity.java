@@ -149,6 +149,7 @@ public class AddLBSAlarmActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     intent.putExtra("New_Alarm", data);
                     setResult(RESULT_OK, intent);
+
                     finish();
                 }
             }
@@ -180,9 +181,11 @@ public class AddLBSAlarmActivity extends AppCompatActivity {
 
     private void initLocation(){
         LocationClientOption option = new LocationClientOption();
+        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
         option.setScanSpan(5000);
         option.setIsNeedAddress(true);
         option.setIsNeedLocationDescribe(true);
+        option.setOpenGps(true);
         //防止偏移
         option.setCoorType("bd09ll");
         mLocationClient.setLocOption(option);
@@ -197,8 +200,7 @@ public class AddLBSAlarmActivity extends AppCompatActivity {
             mBaiduMap.animateMapStatus(update);
             isFirstLocate = false;
         }
-        MyLocationData.Builder locationBuilder = new MyLocationData.
-                Builder();
+        MyLocationData.Builder locationBuilder = new MyLocationData.Builder();
         locationBuilder.latitude(location.getLatitude());
         locationBuilder.longitude(location.getLongitude());
         MyLocationData locationData = locationBuilder.build();
@@ -248,9 +250,10 @@ public class AddLBSAlarmActivity extends AppCompatActivity {
          * @param point 点击的地理坐标
          */
         public void onMapClick(LatLng point){
-            Log.d("test","click map");
+//            Log.d("test","click map");
             latitude = point.latitude;
             longitude = point.longitude;
+            Log.d("click map","lat:lon    "+latitude+"  "+longitude);
             markPoint(point);
             geoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(point));
         }

@@ -277,9 +277,11 @@ public class HomeFragment extends BaseFragment {
                 break;
             case RESULT_ADDLBSALARM:
                 if (resultCode == RESULT_OK) {
-                    LBSAlarmData lbsAlarmData = (LBSAlarmData) data.getSerializableExtra("New_alarm");
+                    LBSAlarmData lbsAlarmData = (LBSAlarmData) data.getSerializableExtra("New_Alarm");
+                    Log.d("home fragment","receive result");
                     getMasterAlarm().addLBSAlarm(lbsAlarmData);
                 }
+                break;
             default:
         }
     }

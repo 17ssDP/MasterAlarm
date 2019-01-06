@@ -296,11 +296,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
             @Override
             public void onClick(View view) {
                 //delete button listener
-
                 AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
                 application.deleteAlarm(alarm);
-                //delete from database
-                LitePal.delete(AlarmData.class, alarm.getId());
             }
         });
 
@@ -316,7 +313,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
 
         int visibility = isExpanded ? View.VISIBLE : View.GONE;
 
-        //颜色组件设置
+        //展开动画
         if (visibility != alarmHolder.extra.getVisibility()) {
             alarmHolder.extra.setVisibility(visibility);
             Aesthetic.Companion.get()

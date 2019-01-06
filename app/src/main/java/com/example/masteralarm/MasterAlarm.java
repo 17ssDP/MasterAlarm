@@ -57,8 +57,8 @@ public class MasterAlarm extends LitePalApplication {
     }
 
     public void removeLBSAlarm(LBSAlarmData alarmData){
-
-//        LitePal.delete(LBSAlarmData.class,alarmData.getId());
+        //从数据库中删除
+        LitePal.delete(LBSAlarmData.class,alarmData.getId());
         lbsAlarmData.remove(alarmData);
     }
 
@@ -90,9 +90,8 @@ public class MasterAlarm extends LitePalApplication {
 
     public void addLBSAlarm(LBSAlarmData data){
         lbsAlarmData.add(data);
-
-        onLBSAlarmChange();
         //当加入LBS闹钟时需要的操作
+        onLBSAlarmChange();
     }
 
     public void addAlarm (AlarmData data){
@@ -103,9 +102,19 @@ public class MasterAlarm extends LitePalApplication {
         onAlarmChange();
     }
 
+    public void deleteLBSAlarm(LBSAlarmData data){
+        if (lbsAlarmData.contains(data)){
+            lbsAlarmData.remove(data);
+            LitePal.delete(LBSAlarmData.class, data.getId());
+            onLBSAlarmChange();
+        }
+    }
+
     public void deleteAlarm(AlarmData data){
         if (alarmData.contains(data)){
             alarmData.remove(data);
+            //delete from database
+            LitePal.delete(AlarmData.class, data.getId());
             AlarmManagerUtil.cancelAlarm(this,ALARM_ACTION,data.getId());
             onAlarmChange();
         }
