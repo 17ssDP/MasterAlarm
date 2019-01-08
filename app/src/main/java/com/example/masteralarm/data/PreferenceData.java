@@ -10,6 +10,9 @@ public class PreferenceData {
     public static final int LBS_ALARM = 4;
     public static final int DEFAULT_ALARM = 5;
 
+    public static int VIBRATE_FREQUENCY = 1;
+    public static int ALARM_DELAY = 5;
+
     public static boolean is24HourFormat = true;
     public static TimeZone timeZone = TimeZone.getTimeZone("GMT+8");
     public static Locale locale= Locale.CHINA;

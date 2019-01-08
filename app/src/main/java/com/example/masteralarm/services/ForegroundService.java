@@ -34,6 +34,9 @@ import java.util.List;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+import static android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP;
+
 public class ForegroundService extends Service implements LBSAlarmListener,AlarmListener {
     public static final String NOTIFICATION_CHANNEL_ID_SERVICE = "com.example.masteralarm.foregroundservice";
     public static final String NOTIFICATION_CHANNEL_ID_TASK = "com.example.masteralarm";
@@ -127,6 +130,7 @@ public class ForegroundService extends Service implements LBSAlarmListener,Alarm
 //                    Log.d("foreground service","we get there");
 //                    Toast.makeText(application,"Get position",Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(application,CommonAwakeActivity.class);
+                    intent.setFlags(FLAG_ACTIVITY_SINGLE_TOP);
                     intent.putExtra("type",PreferenceData.LBS_ALARM);
                     intent.putExtra("alarmdata",data);
                     startActivity(intent);

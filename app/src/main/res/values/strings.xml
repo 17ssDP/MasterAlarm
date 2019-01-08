@@ -9,7 +9,7 @@
     <string name="title_set_alarm">Alarm</string>
     <string name="title_set_timer">Timer</string>
     <string name="title_alarm_dialog">Dialog</string>
-    <string name="title_set_stopwatch">Stopwatch</string>
+    <string name="title_set_stopwatch">LBS Alarm</string>
     <string name="title_lap">Lap</string>
     <string name="title_stopwatch">Stopwatch</string>
     <string name="title_stopwatch_share">%s Stopwatch: %s</string>

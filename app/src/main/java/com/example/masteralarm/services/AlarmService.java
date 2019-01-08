@@ -10,6 +10,8 @@ import android.os.IBinder;
 import android.os.Vibrator;
 import android.util.Log;
 
+import com.example.masteralarm.data.PreferenceData;
+
 import java.io.IOException;
 import androidx.annotation.Nullable;
 
@@ -23,7 +25,7 @@ public class AlarmService extends Service {
     private String path;//音乐路径
     private AlarmBinder binder;//绑定器
     private int alarmTime = 60000;//持续时间，毫秒
-    private long[] frequency = new long[]{1000,500};//震动频率
+    private long[][] frequency = new long[][]{{2000,500},{1000,500},{500,500}};//震动频率
     private boolean isOn;//是否出于闹钟状态
 
     @Override
@@ -73,7 +75,7 @@ public class AlarmService extends Service {
                 @Override
                 public void run() {
                     if (isVibrate){
-                        vibrator.vibrate(frequency,0);
+                        vibrator.vibrate(frequency[PreferenceData.VIBRATE_FREQUENCY],0);
                     }
                     if (isRing){
                         mediaPlayer.start();
@@ -111,11 +113,6 @@ public class AlarmService extends Service {
             alarmTime = time;
         }
 
-        public void setVibrator(long[] newFrequency){
-            if (newFrequency.length >= 2){
-                frequency = newFrequency;
-            }
-        }
     }
 
     private Uri getSystemDefultRingtoneUri() {

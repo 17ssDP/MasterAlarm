@@ -46,7 +46,7 @@ public class CommonAwakeActivity extends AppCompatActivity implements SlideActio
     private boolean isRing;
     private boolean isVibrate;
     private String path;
-    private int delay = 5;//延迟5分钟
+    private int delay = PreferenceData.ALARM_DELAY;//延迟5分钟
 
     //连接闹钟服务
     private AlarmService.AlarmBinder binder;
@@ -110,7 +110,7 @@ public class CommonAwakeActivity extends AppCompatActivity implements SlideActio
         }
         else if (type == PreferenceData.LBS_ALARM){
             lbsAlarmData = (LBSAlarmData)intentpass.getSerializableExtra("alarmdata");
-            if (lbsAlarmData == null||!lbsAlarmData.getIsEnable()){
+            if (lbsAlarmData == null){
                 finish();
             }
             date.setText(lbsAlarmData.getName());

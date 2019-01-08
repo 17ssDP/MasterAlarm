@@ -21,12 +21,9 @@ import android.widget.TimePicker;
 import com.bumptech.glide.Glide;
 import com.example.masteralarm.R;
 import com.example.masteralarm.activity.AddLBSAlarmActivity;
-import com.example.masteralarm.activity.CommonAwakeActivity;
 import com.example.masteralarm.activity.AddAlarmActivity;
-import com.example.masteralarm.activity.MicroAwakeActivity;
 import com.example.masteralarm.adapters.SimplePagerAdapter;
 import com.example.masteralarm.data.LBSAlarmData;
-import com.example.masteralarm.utils.AlarmManagerUtil;
 import com.example.masteralarm.utils.FormatUtils;
 import com.example.masteralarm.utils.HttpUtil;
 import com.example.masteralarm.views.PageIndicatorView;
@@ -55,7 +52,7 @@ public class HomeFragment extends BaseFragment {
     public static final int UPDATE_BACKGROUND = 2;
 
     private FABsMenu menu;
-    private TitleFAB stopwatchFab;
+    private TitleFAB lbsalarmFab;
     private TitleFAB timerFab;
     private TitleFAB alarmFab;
     private ImageView background;
@@ -114,8 +111,8 @@ public class HomeFragment extends BaseFragment {
         behavior = BottomSheetBehavior.from(sheet);
 
         menu = view.findViewById(R.id.fabsMenu);
-        stopwatchFab = view.findViewById(R.id.stopwatchFab);
-        timerFab = view.findViewById(R.id.timerFab);
+        lbsalarmFab = view.findViewById(R.id.stopwatchFab);
+//        timerFab = view.findViewById(R.id.timerFab);
         alarmFab = view.findViewById(R.id.alarmFab);
         timePager = view.findViewById(R.id.timePager);
         timeIndicator = view.findViewById(R.id.pageIndicator);
@@ -190,53 +187,22 @@ public class HomeFragment extends BaseFragment {
         });
 
         //use to debug
-        timerFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Intent intent = new Intent("com.example.masteralarm.MY_BROADCAST");
-//                intent.setComponent(new ComponentName("com.example.masteralarm","com.example.masteralarm.receivers.AlarmBroadcastReceiver"));
-//                getContext().sendBroadcast(intent);
-                Intent intent = new Intent(getContext(),MicroAwakeActivity.class);
-                getContext().startActivity(intent);
-            }
-        });
-        stopwatchFab.setOnClickListener(new View.OnClickListener() {
+//        timerFab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                Intent intent = new Intent("com.example.masteralarm.MY_BROADCAST");
+////                intent.setComponent(new ComponentName("com.example.masteralarm","com.example.masteralarm.receivers.AlarmBroadcastReceiver"));
+////                getContext().sendBroadcast(intent);
+//                Intent intent = new Intent(getContext(),MicroAwakeActivity.class);
+//                getContext().startActivity(intent);
+//            }
+//        });
+        lbsalarmFab.setOnClickListener(new View.OnClickListener() {
             boolean flag = false;
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(),AddLBSAlarmActivity.class);
                 startActivityForResult(intent,RESULT_ADDLBSALARM);
-//                LBSAlarmData data = new LBSAlarmData();
-//                data.setIsEnable(true);
-//                data.setIsRing(true);
-//                data.setIsVibrate(false);
-//                data.setName("Test");
-//                data.setStart("Home");
-//                data.setEnd("School");
-//                data.setLatitude(132.0336);
-//                data.setLongitude(20.56);
-//                data.save();
-//                getMasterAlarm().addLBSAlarm(data);
-
-
-//                Calendar choose = Calendar.getInstance();
-//                Calendar cur = Calendar.getInstance();
-//                choose.add(13,10);
-//                //如果时间更小，加上一天
-////                if (cur.after(choose)){
-////                    choose.add(5,1);
-////                }
-//                AlarmData alarmData = new AlarmData(1);
-//                alarmData.setEnable(true);
-//                alarmData.setLabel("Test Database");
-//                alarmData.setRepeat(new boolean[]{false,false,false,false,false,false,false});
-//                alarmData.setVibrate(false);
-//                alarmData.setCalendarTime(choose);
-//                alarmData.setTone(getSystemDefultRingtoneUri());
-//                alarmData.setHasSound(true);
-//
-//                AlarmManagerUtil.setAlarm(getMasterAlarm(),alarmData);
-//                Log.d("test","set complete");
             }
         });
     }
