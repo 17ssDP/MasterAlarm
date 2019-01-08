@@ -13,6 +13,7 @@ import com.example.masteralarm.activity.MicroAwakeActivity;
  * Created by SiKang on 2016/1/5.
  */
 public class AudioSensor extends MySensor {
+    public static int time = 0;
     private static final String TAG = "AudioSensor";
     private static AudioSensor mMicSensor = null;
     static final int SAMPLE_RATE_IN_HZ = 8000;
@@ -74,6 +75,7 @@ public class AudioSensor extends MySensor {
                     //采集平均值不太稳定（iPhone非常稳定）这里用定值
                     if (volume > 75) {
                         Log.d(TAG, volume + "");
+                            time++;
                         mHandler.sendEmptyMessage(MicroAwakeActivity.BLOW_START);
                     }
                     synchronized (mLock) {

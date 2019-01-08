@@ -139,13 +139,98 @@
             android:layout_height="24dp"
             android:layout_marginBottom="4dp"
             android:scaleType="centerInside"
-            app:srcCompat="@drawable/ic_ringtone_disabled"
+            app:srcCompat="@drawable/ic_vibrate_none"
             tools:alpha="0.333"
             tools:tint="@color/attribouter_iconColor" />
     </LinearLayout>
 
-    <!--//Name-->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="18dp"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        android:paddingTop="18dp">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:paddingEnd="4dp"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="16sp"
+            android:text="Common Alarm" />
+
+        <Switch
+            android:id="@+id/common_alarm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:tag=":aesthetic_ignore" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="18dp"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        android:paddingTop="18dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:paddingRight="4dp"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="16sp"
+            android:text="Shake Alarm" />
+
+        <Switch
+            android:id="@+id/shake_alarm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:tag=":aesthetic_ignore" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="18dp"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        android:paddingTop="18dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:paddingRight="4dp"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="16sp"
+            android:text="Micro Alarm" />
+
+        <Switch
+            android:id="@+id/micro_alarm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:tag=":aesthetic_ignore" />
+    </FrameLayout>
+
+    <!--//Name-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

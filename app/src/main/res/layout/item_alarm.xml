@@ -254,7 +254,22 @@
                     android:background="@color/attribouter_iconColor" />
 
             </LinearLayout>
-
+            <TextView
+                android:id="@+id/save"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="start|center_vertical"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:gravity="center"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="4dp"
+                android:text="@string/title_save"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="?android:textColorPrimary"
+                android:textSize="16sp"
+                android:textStyle="bold" />
             <TextView
                 android:id="@+id/delete"
                 android:layout_width="wrap_content"

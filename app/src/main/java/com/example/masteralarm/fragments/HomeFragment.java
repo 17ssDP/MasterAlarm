@@ -26,6 +26,7 @@ import com.example.masteralarm.activity.AddAlarmActivity;
 import com.example.masteralarm.activity.MicroAwakeActivity;
 import com.example.masteralarm.adapters.SimplePagerAdapter;
 import com.example.masteralarm.data.LBSAlarmData;
+import com.example.masteralarm.data.PreferenceData;
 import com.example.masteralarm.utils.AlarmManagerUtil;
 import com.example.masteralarm.utils.FormatUtils;
 import com.example.masteralarm.utils.HttpUtil;
@@ -84,7 +85,10 @@ public class HomeFragment extends BaseFragment {
                     clock.setText(text);
                     break;
                 case UPDATE_BACKGROUND:
-                    Glide.with(Objects.requireNonNull(getContext())).load(bingPic).into(background);
+                    if(bingPic != null)
+                        Glide.with(Objects.requireNonNull(getContext())).load(bingPic).into(background);
+                    else
+                        Glide.with(Objects.requireNonNull(getContext())).load(R.mipmap.background2).into(background);
                 default:break;
             }
         }
@@ -131,13 +135,16 @@ public class HomeFragment extends BaseFragment {
         updateClock();
 
         //加载背景图片
-        SharedPreferences prefs = getDefaultSharedPreferences(getContext());
-        String bingPic = prefs.getString("bing_pic", null);
-        if(bingPic != null) {
-            Glide.with(this).load(bingPic).into(background);
-        } else {
+//        if(bingPic != null) {
+//            Glide.with(this).load(bingPic).into(background);
+//        } else {
+//            loadBingPic();
+//        }
+        if(PreferenceData.updateBack)
             loadBingPic();
-        }
+        else
+            Glide.with(Objects.requireNonNull(getContext())).load(R.mipmap.background2).into(background);
+
         //开启前台服务
         getMasterAlarm().startForeground(view.getContext());
         return view;
@@ -308,6 +315,16 @@ public class HomeFragment extends BaseFragment {
         HttpUtil.sendOkHttpRequest(requestBingPic, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+                SharedPreferences prefs = getDefaultSharedPreferences(getContext());
+                bingPic = prefs.getString("bing_pic", null);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Message message = new Message();
+                        message.what = UPDATE_BACKGROUND;
+                        handler.sendMessage(message);
+                    }
+                }).start();
                 e.printStackTrace();
             }
 

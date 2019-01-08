@@ -52,7 +52,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
     private int colorForeground = Color.TRANSPARENT;
     private int textColorPrimary = Color.WHITE;
     private int colorAccent = Color.WHITE;
-    private MyThread updateAlarm;
 
     private int expandedPosition = -1;
 
@@ -79,6 +78,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
         private View vibrate;
         private ImageView vibrateImage;
         private ImageView expandImage;
+        private TextView save;
         private TextView delete;
         private View indicators;
         private ImageView repeatIndicator;
@@ -101,6 +101,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
             vibrate = v.findViewById(R.id.vibrate);
             vibrateImage = v.findViewById(R.id.vibrateImage);
             expandImage = v.findViewById(R.id.expandImage);
+            save = v.findViewById(R.id.save);
             delete = v.findViewById(R.id.delete);
             indicators = v.findViewById(R.id.indicators);
             repeatIndicator = v.findViewById(R.id.repeatIndicator);
@@ -118,7 +119,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         final ViewHolder alarmHolder = (ViewHolder) holder;
         final boolean isExpanded = position == expandedPosition;
         AlarmData alarm = getAlarm(position);
@@ -182,7 +183,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
 
         alarmHolder.indicators.setVisibility(isExpanded ? View.GONE : View.VISIBLE);
         if (isExpanded) {
-            alarmHolder.repeat.setOnCheckedChangeListener(null);
             alarmHolder.repeat.setChecked(alarm.isRepeat());
             alarmHolder.repeat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -196,7 +196,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
                     transition.setDuration(150);
                     TransitionManager.beginDelayedTransition(recycler, transition);
 
-                    notifyDataSetChanged();
+//                    notifyItemChanged(position);
+                    for (int i = 0; i < 7; i++) {
+                        DaySwitch daySwitch = (DaySwitch) alarmHolder.days.getChildAt(i);
+                        daySwitch.setChecked(alarm.getRepeat()[i]);
+                    }
+
                 }
             });
 
@@ -206,10 +211,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onCheckedChanged(DaySwitch daySwitch, boolean b) {
                     AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
-                    alarm.getRepeat()[alarmHolder.days.indexOfChild(daySwitch)] = b;
-
-                    if (!alarm.isRepeat())
+                    alarm.setRepeat(b,alarmHolder.days.indexOfChild(daySwitch) );
+                    if (!alarm.isRepeat()){
+                        alarmHolder.repeat.setChecked(false);
                         notifyItemChanged(alarmHolder.getAdapterPosition());
+                    }
                 }
             };
 
@@ -217,6 +223,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
                 DaySwitch daySwitch = (DaySwitch) alarmHolder.days.getChildAt(i);
                 daySwitch.setChecked(alarm.getRepeat()[i]);
                 daySwitch.setOnCheckedChangeListener(listener);
+                daySwitch.setEnabled(false);
 
                 switch (i) {
                     case 0:
@@ -260,15 +267,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
             alarmHolder.vibrate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(updateAlarm == null) {
-                        updateAlarm = new MyThread();
-                        try {
-                            updateAlarm.sleep(5);
-                            updateAlarm.run();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
                     AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
                     alarm.setVibrate(!alarm.isVibrate());
 
@@ -291,7 +289,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
         }
 
         alarmHolder.expandImage.animate().rotationX(isExpanded ? 180 : 0).start();
+        alarmHolder.save.setVisibility(isExpanded? View.VISIBLE : View.GONE);
         alarmHolder.delete.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+        alarmHolder.save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
+                alarm.updateAll("id = ?", "" + alarm.getId());
+            }
+        });
         alarmHolder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -403,15 +409,4 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
-    //更新闹钟信息线程
-    class MyThread extends Thread{
-        @Override
-        public void run() {
-
-        }
-        public void update(ViewHolder alarmHolder) {
-            AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
-            alarm.updateAll("id = ?", "" + alarm.getId());
-        }
-    }
 }

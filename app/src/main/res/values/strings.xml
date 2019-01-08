@@ -76,4 +76,5 @@
     <string name="new_alarm">New Alarm</string>
     <string name="cancel">Cancel</string>
     <string name="end_address">End address</string>
+    <string name="title_save">Save</string>
 </resources>

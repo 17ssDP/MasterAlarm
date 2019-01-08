@@ -13,6 +13,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -194,6 +195,11 @@ public class MicroAwakeActivity extends Activity implements View.OnTouchListener
                 blowAngle += rotationAngle;
                 if (blowAngle > 360) {
                     blowAngle = 1;
+                }
+                Log.d("time", "" + AudioSensor.time);
+                if(AudioSensor.time > 50) {
+                    AudioSensor.time = 0;
+                    finish();
                 }
                 handler.sendEmptyMessage(BLOWING);
                 try {

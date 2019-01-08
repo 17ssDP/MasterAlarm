@@ -19,6 +19,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
     <application
         android:name=".MasterAlarm"
@@ -73,7 +74,10 @@
             android:screenOrientation="portrait"
             android:launchMode="singleTask">
         </activity>
-        <activity android:name=".activity.MicroAwakeActivity" />
+        <activity android:name=".activity.MicroAwakeActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask">
+        </activity>
 
         <service android:name=".services.AlarmService" />
         <service android:name=".services.ForegroundService" />
