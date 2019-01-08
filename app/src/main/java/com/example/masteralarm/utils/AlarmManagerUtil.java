@@ -6,6 +6,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.util.Log;
 
 import com.example.masteralarm.data.AlarmData;
 
@@ -115,6 +116,8 @@ public class AlarmManagerUtil {
         intent.putExtra("alarmdata",alarmData);
         intent.putExtra("intervalMillis", intervalMillis);
         intent.putExtra("alarmid",alarmData.getId());
+        intent.putExtra("type", alarmData.getType());
+        Log.d("before intent:", "" + alarmData.getType());
         PendingIntent sender = PendingIntent.getBroadcast(context, alarmData.getId(), intent, PendingIntent.FLAG_CANCEL_CURRENT);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             am.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);

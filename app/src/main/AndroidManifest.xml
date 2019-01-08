@@ -75,9 +75,13 @@
         </activity>
         <activity
             android:name=".activity.CommonAwakeActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".activity.MicroAwakeActivity" />
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask">
+        </activity>
+        <activity android:name=".activity.MicroAwakeActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask">
+        </activity>
 
         <service android:name=".services.AlarmService" />
         <service android:name=".services.ForegroundService" />

@@ -30,6 +30,9 @@ public class AlarmData extends LitePalSupport implements Serializable {
     private int hasSound;       //是否有声音
     private int type = 1;       //闹钟类型：0为普通闹钟、1为甩手闹钟、2为吹气闹钟、3为地点闹钟
 
+    public AlarmData() {
+
+    }
     public AlarmData(int id) {
 
     }
@@ -89,12 +92,38 @@ public class AlarmData extends LitePalSupport implements Serializable {
 
     public void setRepeat(boolean[] repeat) {
         day1 = repeat[0]? 1 : 0;
-        day2 = repeat[0]? 1 : 0;
-        day3 = repeat[0]? 1 : 0;
-        day4 = repeat[0]? 1 : 0;
-        day5 = repeat[0]? 1 : 0;
-        day6 = repeat[0]? 1 : 0;
-        day7 = repeat[0]? 1 : 0;
+        day2 = repeat[1]? 1 : 0;
+        day3 = repeat[2]? 1 : 0;
+        day4 = repeat[3]? 1 : 0;
+        day5 = repeat[4]? 1 : 0;
+        day6 = repeat[5]? 1 : 0;
+        day7 = repeat[6]? 1 : 0;
+    }
+
+    public void setRepeat(boolean repeat, int day) {
+        switch (day) {
+            case 0:
+                day1 = repeat? 1 : 0;
+                break;
+            case 1:
+                day2 = repeat? 1 : 0;
+                break;
+            case 2:
+                day3 = repeat? 1 : 0;
+                break;
+            case 3:
+                day4 = repeat? 1 : 0;
+                break;
+            case 4:
+                day5 = repeat? 1 : 0;
+                break;
+            case 5:
+                day6 = repeat? 1 : 0;
+                break;
+            case 6:
+                day7 = repeat? 1 : 0;
+                break;
+        }
     }
 
     public String getLabel() {
@@ -145,6 +174,6 @@ public class AlarmData extends LitePalSupport implements Serializable {
     }
 
     public void setType(int type) {
-        type = type;
+        this.type = type;
     }
 }
