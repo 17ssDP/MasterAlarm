@@ -24,6 +24,7 @@ import com.example.masteralarm.activity.CommonAwakeActivity;
 import com.example.masteralarm.activity.MainActivity;
 import com.example.masteralarm.data.AlarmData;
 import com.example.masteralarm.data.LBSAlarmData;
+import com.example.masteralarm.data.PreferenceData;
 import com.example.masteralarm.interfaces.AlarmListener;
 import com.example.masteralarm.interfaces.LBSAlarmListener;
 
@@ -49,6 +50,7 @@ public class ForegroundService extends Service implements LBSAlarmListener,Alarm
     private MasterAlarm application;
     private LocationClient mLocationClient;
     public BDAbstractLocationListener myListener;
+    NotificationManager mNotificationManager;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -63,6 +65,8 @@ public class ForegroundService extends Service implements LBSAlarmListener,Alarm
         application.addListener(this);
         onLBSAlarmChanged();
 
+        mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
         Intent intent = new Intent(this,MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,0);
         Notification notification;
@@ -70,7 +74,7 @@ public class ForegroundService extends Service implements LBSAlarmListener,Alarm
             initChannel();
             notification = new Notification.Builder(this)
                     .setContentTitle("Alarm")
-                    .setContentText("0 Clocks ready")
+                    .setContentText(alarmDataList.size() + " Clocks ready")
                     .setSmallIcon(R.mipmap.ic_launcher)
                     .setWhen(Calendar.getInstance().getTimeInMillis())
                     .setChannelId(NOTIFICATION_CHANNEL_ID_SERVICE)
@@ -80,7 +84,7 @@ public class ForegroundService extends Service implements LBSAlarmListener,Alarm
         else{
             notification = new Notification.Builder(this)
                     .setContentTitle("Alarm")
-                    .setContentText("0 Clocks ready")
+                    .setContentText(alarmDataList.size()+" Clocks ready")
                     .setSmallIcon(R.mipmap.ic_launcher)
                     .setWhen(Calendar.getInstance().getTimeInMillis())
                     .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.ic_launcher))
@@ -119,11 +123,13 @@ public class ForegroundService extends Service implements LBSAlarmListener,Alarm
             if (data.getIsEnable()){
                 if (isNear(lat,lon,data.getLatitude(),data.getLongitude())){
                     data.setIsEnable(false);
-                    Log.d("foreground service","we get there");
-                    Toast.makeText(application,"Get position",Toast.LENGTH_SHORT).show();
-//                    Intent intent = new Intent(this,CommonAwakeActivity.class);
-//                    intent
-//                    startActivity(intent);
+                    data.updateAll("id = ?",""+data.getId());
+//                    Log.d("foreground service","we get there");
+//                    Toast.makeText(application,"Get position",Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(application,CommonAwakeActivity.class);
+                    intent.putExtra("type",PreferenceData.LBS_ALARM);
+                    intent.putExtra("alarmdata",data);
+                    startActivity(intent);
                 }
             }
         }
@@ -138,7 +144,7 @@ public class ForegroundService extends Service implements LBSAlarmListener,Alarm
 
     @Override
     public void onAlarmChanged() {
-
+        setNotification();
     }
 
     public class MyLocationListener extends BDAbstractLocationListener {
@@ -184,4 +190,31 @@ public class ForegroundService extends Service implements LBSAlarmListener,Alarm
         mLocationClient.start();
     }
 
+
+    private void setNotification(){
+        Intent intent = new Intent(this,MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,0);
+        Notification notification;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            initChannel();
+            notification = new Notification.Builder(this)
+                    .setContentTitle("Alarm")
+                    .setContentText(alarmDataList.size() + " Clocks ready")
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setWhen(Calendar.getInstance().getTimeInMillis())
+                    .setChannelId(NOTIFICATION_CHANNEL_ID_SERVICE)
+                    .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.ic_launcher))
+                    .setContentIntent(pendingIntent).build();
+        }
+        else{
+            notification = new Notification.Builder(this)
+                    .setContentTitle("Alarm")
+                    .setContentText(alarmDataList.size()+" Clocks ready")
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setWhen(Calendar.getInstance().getTimeInMillis())
+                    .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.ic_launcher))
+                    .setContentIntent(pendingIntent).build();
+        }
+        mNotificationManager.notify(SERVICE_ID,notification);
+    }
 }

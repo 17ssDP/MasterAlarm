@@ -54,8 +54,7 @@ public class AlarmManagerUtil {
         PendingIntent sender = PendingIntent.getBroadcast(context, id, intent, PendingIntent
                 .FLAG_CANCEL_CURRENT);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            am.setWindow(AlarmManager.RTC_WAKEUP, calMethod(week, calendar.getTimeInMillis()),
-                    intervalMillis, sender);
+            am.setExact(AlarmManager.RTC_WAKEUP, calMethod(week, calendar.getTimeInMillis()), sender);
         } else {
             if (flag == 0) {
                 am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
@@ -105,7 +104,6 @@ public class AlarmManagerUtil {
             }
         }
 
-
         //保证应用在关闭状态也能接收到广播
         if(android.os.Build.VERSION.SDK_INT >=12) {
             intent.setFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);//3.1以后的版本需要设置Intent.FLAG_INCLUDE_STOPPED_PACKAGES
@@ -113,6 +111,8 @@ public class AlarmManagerUtil {
 
         intent.setPackage(context.getPackageName());
         intent.setComponent(new ComponentName("com.example.masteralarm","com.example.masteralarm.receivers.AlarmBroadcastReceiver"));
+        intent.putExtra("type",alarmData.getType());
+        intent.putExtra("alarmdata",alarmData);
         intent.putExtra("intervalMillis", intervalMillis);
         intent.putExtra("alarmid",alarmData.getId());
         PendingIntent sender = PendingIntent.getBroadcast(context, alarmData.getId(), intent, PendingIntent.FLAG_CANCEL_CURRENT);

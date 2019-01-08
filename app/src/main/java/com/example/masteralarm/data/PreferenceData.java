@@ -8,6 +8,7 @@ public class PreferenceData {
     public static final int SHAKE_ALARM = 2;
     public static final int BUBBLE_ALARM = 3;
     public static final int LBS_ALARM = 4;
+    public static final int DEFAULT_ALARM = 5;
 
     public static boolean is24HourFormat = true;
     public static TimeZone timeZone = TimeZone.getTimeZone("GMT+8");

@@ -45,7 +45,6 @@ public class MasterAlarm extends LitePalApplication {
         //百度地图在使用SDK各组件之前初始化context信息，传入ApplicationContext
         SDKInitializer.initialize(this);
         SDKInitializer.setCoordType(CoordType.BD09LL);
-
     }
 
     public List<AlarmData> getAlarmData(){

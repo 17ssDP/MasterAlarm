@@ -22,7 +22,10 @@ import com.bumptech.glide.Glide;
 import com.example.masteralarm.MasterAlarm;
 import com.example.masteralarm.R;
 import com.example.masteralarm.data.AlarmData;
+import com.example.masteralarm.data.LBSAlarmData;
+import com.example.masteralarm.data.PreferenceData;
 import com.example.masteralarm.services.AlarmService;
+import com.example.masteralarm.utils.AlarmManagerUtil;
 
 import java.util.Calendar;
 
@@ -38,6 +41,12 @@ public class CommonAwakeActivity extends AppCompatActivity implements SlideActio
     private SlideActionView actionView;//下方滑动组件
     private Thread thread;
     private AlarmData data;
+    private LBSAlarmData lbsAlarmData;
+    private int type;
+    private boolean isRing;
+    private boolean isVibrate;
+    private String path;
+    private int delay = 5;//延迟5分钟
 
     //连接闹钟服务
     private AlarmService.AlarmBinder binder;
@@ -74,38 +83,58 @@ public class CommonAwakeActivity extends AppCompatActivity implements SlideActio
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_common_awake);
 
-        //如果不是闹钟触发，自动关闭不让启动
-        if (getIntent() == null){
-            finish();
-        }
         background = findViewById(R.id.background);
         application = (MasterAlarm)getApplication();
         date = findViewById(R.id.date);
         time = findViewById(R.id.time);
         actionView = findViewById(R.id.slideView);
-        data = (AlarmData)getIntent().getSerializableExtra("alarmdata");
+
+        //如果不是闹钟触发，自动关闭不让启动
+        if (getIntent() == null){
+            finish();
+        }
+
+        Intent intentpass = getIntent();
+        type = intentpass.getIntExtra("type",0);
+
+        //根据类型设置参数
+        if (type == PreferenceData.COMMON_ALARM){
+            data = (AlarmData)intentpass.getSerializableExtra("alarmdata");
+            if (data == null||!data.isEnable()){
+                finish();
+            }
+            date.setText(data.getLabel());
+            isRing = data.isHasSound();
+            isVibrate = data.isVibrate();
+            path = getSystemDefultRingtoneUri().getPath();
+        }
+        else if (type == PreferenceData.LBS_ALARM){
+            lbsAlarmData = (LBSAlarmData)intentpass.getSerializableExtra("alarmdata");
+            if (lbsAlarmData == null||!lbsAlarmData.getIsEnable()){
+                finish();
+            }
+            date.setText(lbsAlarmData.getName());
+            isRing =lbsAlarmData.getIsRing();
+            isVibrate = lbsAlarmData.getIsVibrate();
+            path = getSystemDefultRingtoneUri().getPath();
+        }
 
         //加载背景图片
         Glide.with(this).load(R.mipmap.alarm_background).into(background);
 
         //绑定服务
         Intent intent = new Intent(this,AlarmService.class);
-        if (data == null){
-            intent.putExtra("isRing",true);
-            intent.putExtra("isVibrate",true);
-            intent.putExtra("ringPath",getSystemDefultRingtoneUri().getPath());
-        }
-        else {
-            intent.putExtra("isRing",data.isHasSound());
-            intent.putExtra("isVibrate",data.isVibrate());
-            intent.putExtra("ringPath",getSystemDefultRingtoneUri().getPath());
-        }
+
+        intent.putExtra("isRing",isRing);
+        intent.putExtra("isVibrate",isVibrate);
+        intent.putExtra("ringPath",path);
+
         startService(intent);
         bindService(intent,connection,BIND_AUTO_CREATE);
 
-        //滑动组件左字符
+        //滑动组件左图标
         actionView.setLeftIcon(VectorDrawableCompat.create(getResources(), R.drawable.ic_snooze, getTheme()));
-        //滑动组件右字符
+        //滑动组件右图标
         actionView.setRightIcon(VectorDrawableCompat.create(getResources(), R.drawable.ic_close, getTheme()));
         actionView.setListener(this);
 
@@ -124,19 +153,38 @@ public class CommonAwakeActivity extends AppCompatActivity implements SlideActio
 
     @Override
     public void onSlideLeft() {
-
-        //延迟一定时间再次响铃
+        if (type == PreferenceData.LBS_ALARM){
+            binder.stopAlarm();
+            thread.interrupt();
+            finish();
+        }
+        else {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(System.currentTimeMillis());
+            calendar.add(12,delay);//延迟5分钟
+            AlarmData alarmData = new AlarmData(data.getId()+100);
+            alarmData.setEnable(true);
+            alarmData.setHasSound(isRing);
+            alarmData.setVibrate(isVibrate);
+            alarmData.setLabel(data.getLabel());
+            alarmData.setRepeat(new boolean[]{false,false,false,false,false,false,false});
+            alarmData.setCalendarTime(calendar);
+            AlarmManagerUtil.setAlarm(application,alarmData);
+            binder.stopAlarm();
+            thread.interrupt();
+            finish();
+        }
     }
 
     @Override
     public void onSlideRight() {
+
         binder.stopAlarm();
         thread.interrupt();
         finish();
     }
 
     private void updateTime(){
-//        date.setText(data.getLabel());
         thread = new Thread(new Runnable() {
             @Override
             public void run() {
